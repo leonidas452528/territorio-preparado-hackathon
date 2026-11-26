@@ -1,0 +1,39 @@
+tabla,columna,tipo,obligatoria,valores_o_rango,quien_llena,descripcion,ejemplo
+ciudades,ciudad_id,id,si,,entidad,"Identificador estable: nombre y país. Letras minúsculas, números y guiones (3-40 caracteres).",cali-co
+ciudades,nombre,texto,si,máx 80 caracteres,entidad,Nombre público de la ciudad.,Cali
+ciudades,pais,texto,si,máx 2 caracteres,entidad,Código de país de 2 letras (ISO 3166-1).,CO
+ciudades,lat,decimal,si,-90..90,entidad,"Latitud del centro, en grados decimales.",3.4516
+ciudades,lon,decimal,si,-180..180,entidad,"Longitud del centro, en grados decimales.",-76.5320
+ciudades,nivel_detalle,opcion,si,mapa|edificios|maqueta,entidad,mapa = mapa 2D y espacios; edificios = 3D automático desde huellas abiertas; maqueta = 3D curado con simulaciones.,maqueta
+ciudades,estado,opcion,si,piloto|propuesta,entidad,piloto = ya hay datos y equipo; propuesta = solo se ha planteado.,piloto
+ciudades,idioma,opcion,si,es|en|pt|fr|ca,entidad,Idioma principal de la ciudad para sus avisos y plantillas.,es
+ciudades,marco_legal,texto,si,máx 120 caracteres,entidad,Norma de gestión del riesgo y de protección de datos que aplica en ese país. Escribe «Por definir» si aún no se ha confirmado: no la inventes.,Colombia: Ley 1523 de 2012
+organizaciones,codigo_organizacion,id,si,,entidad,"Código que asigna el ente. Sin nombres de personas. Letras minúsculas, números y guiones (3-40 caracteres).",conj-azalea-01
+organizaciones,ciudad_id,id,si,,entidad,Ciudad donde actúa (debe existir en ciudades).,cali-co
+organizaciones,tipo,opcion,si,propiedad_horizontal|jac|comite_barrial|caja_compensacion|aseguradora|otra,entidad,Tipo de organización.,propiedad_horizontal
+organizaciones,zona,texto,si,máx 80 caracteres,entidad,"Comuna, barrio o sector. No pongas direcciones de vivienda.",Comuna 17
+organizaciones,activa,si_no,si,,entidad,"1 si sigue reportando, 0 si no.",1
+espacios_propuestos,espacio_id,id,si,,comunidad,"Identificador del espacio. Letras minúsculas, números y guiones (3-40 caracteres).",cali-salon-azalea
+espacios_propuestos,ciudad_id,id,si,,comunidad,Ciudad (debe existir en ciudades).,cali-co
+espacios_propuestos,nombre_publico,texto,si,máx 100 caracteres,comunidad,Nombre del lugar como se conoce públicamente.,Salón comunal Azalea
+espacios_propuestos,tipo_espacio,opcion,si,parque|cancha|coliseo|salon_comunal|parqueadero|colegio|otro,comunidad,Tipo de espacio.,salon_comunal
+espacios_propuestos,lat,decimal,si,-90..90,comunidad,Latitud (clic derecho en un mapa y copia el primer número).,3.3942
+espacios_propuestos,lon,decimal,si,-180..180,comunidad,Longitud (el segundo número).,-76.5426
+espacios_propuestos,area_m2,decimal,no,1..5000000,comunidad,Área aproximada en m². Déjala vacía si no la conoces: no la inventes.,180
+espacios_propuestos,cubierto,si_no,si,,comunidad,"1 si tiene techo, 0 si es abierto.",1
+espacios_propuestos,propietario,opcion,si,publico|privado|desconocido,comunidad,Quién es el propietario.,privado
+espacios_propuestos,autorizacion,opcion,si,si|no|pendiente,comunidad,¿El propietario autorizó usarlo en emergencias?,pendiente
+espacios_propuestos,observacion,texto,no,máx 280 caracteres,comunidad,"Máximo 280 caracteres. Sin nombres, correos, teléfonos ni documentos.",Tiene baño y tomas de agua.
+reportes,ciudad_id,id,si,,comunidad,Ciudad (debe existir en ciudades).,cali-co
+reportes,periodo,mes,si,,comunidad,"Mes que se reporta, formato AAAA-MM.",2026-10
+reportes,codigo_organizacion,id,si,,comunidad,El código que te dio tu ente (debe existir en organizaciones).,conj-azalea-01
+reportes,tipo_reporte,opcion,si,estado_espacio|necesidad|alerta_barrial,comunidad,estado_espacio = cómo está un espacio; necesidad = lo que falta; alerta_barrial = algo que preocupa.,necesidad
+reportes,espacio_id,id,no,,comunidad,Espacio al que se refiere. Obligatorio si el tipo es estado_espacio.,cali-salon-azalea
+reportes,n_total,entero,no,0..100000,comunidad,Personas que se podrían alojar o que están en la zona. Solo un número.,120
+reportes,n_0_5,entero,no,0..100000,comunidad,"De ese total, niñez de 0 a 5 años.",10
+reportes,n_6_17,entero,no,0..100000,comunidad,De 6 a 17 años.,25
+reportes,n_18_59,entero,no,0..100000,comunidad,De 18 a 59 años.,70
+reportes,n_60_mas,entero,no,0..100000,comunidad,De 60 años o más.,15
+reportes,n_discapacidad,entero,no,0..100000,comunidad,"Opcional y sensible: solo el conteo, nunca quién.",4
+reportes,n_animales_compania,entero,no,0..100000,comunidad,Animales de compañía.,12
+reportes,observacion,texto,no,máx 280 caracteres,comunidad,"Máximo 280 caracteres. Sin nombres, correos, teléfonos ni documentos.",Faltan colchonetas y agua.

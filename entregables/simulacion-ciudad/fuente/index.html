@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulación de ciudad · Cali</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root { --tinta: #193e3b; --suave: #526b65; --borde: #d8e0d7; --verde: #205c51; --crema: #f5f5ef; font-family: "DM Sans", system-ui, sans-serif; color: var(--tinta); background: var(--crema); }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { display: flex; flex-direction: column; background: var(--crema); }
+.cabecera { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; padding: 10px 20px; background: #fff; border-bottom: 1px solid var(--borde); }
+.marca { margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--verde); }
+h1 { margin: 2px 0 0; font: 800 20px Manrope, "DM Sans", system-ui, sans-serif; }
+.aviso { margin: 0; max-width: 560px; font-size: 11px; line-height: 1.5; color: var(--suave); }
+.diseno { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) clamp(380px, 31vw, 480px); }
+.visor { position: relative; min-height: 420px; overflow: hidden; }
+.visor canvas { display: block; }
+.capa-etiquetas { position: absolute; inset: 0; pointer-events: none; }
+.etiqueta { padding: 6px 10px; text-align: center; background: #fffdf3ef; border: 1px solid #b1c3b0; border-radius: 6px; box-shadow: 0 4px 12px #23452b12; }
+.etiqueta strong { display: block; font-size: 12px; }
+.etiqueta span { display: block; font-size: 10px; color: var(--suave); }
+.etiqueta.real { border-color: #6b4fa0; background: #f7f3ffef; pointer-events: auto; cursor: pointer; }
+.etiqueta.real strong { color: #4d3480; }
+.etiqueta.sugerido { border-color: #1f8a4c; pointer-events: auto; cursor: pointer; }
+.cargando { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; margin: 0; padding: 20px; text-align: center; font-weight: 600; background: var(--crema); }
+.cargando[hidden] { display: none; }
+.leyenda { position: absolute; left: 12px; bottom: 12px; display: grid; gap: 4px; max-width: 290px; padding: 10px 12px; font-size: 12px; background: #ffffffe6; border: 1px solid var(--borde); border-radius: 10px; }
+.leyenda i { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; border-radius: 3px; }
+.ayuda { position: absolute; top: 12px; right: 12px; margin: 0; padding: 4px 8px; font-size: 11px; color: var(--suave); background: #ffffffcc; border-radius: 6px; }
+button, select, input { font: inherit; }
+button { cursor: pointer; padding: 8px 10px; font-size: 13px; color: var(--tinta); background: #fff; border: 1px solid var(--borde); border-radius: 8px; }
+button[aria-pressed="true"], .primario { color: #fff; background: var(--verde); border-color: var(--verde); }
+.primario { font-weight: 600; }
+button:disabled { opacity: .6; cursor: wait; }
+button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid #e8913a; outline-offset: 2px; }
+select { min-width: 0; padding: 5px 6px; border: 1px solid var(--borde); border-radius: 8px; background: #fff; }
+
+/* Panel derecho: cabecera fija con lo que se usa siempre; debajo, tarjetas. */
+.cuadro { overflow: auto; padding: 0 16px 24px; background: #fff; border-left: 1px solid var(--borde); }
+.cuadro-cabeza { position: sticky; top: 0; z-index: 2; margin: 0 -16px 4px; padding: 12px 16px 12px; background: #fffffff5; border-bottom: 1px solid var(--borde); box-shadow: 0 6px 12px -10px #23452b40; }
+.pestanas { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: var(--crema); border-radius: 10px; }
+.pestanas button { padding: 7px 10px; border: 0; background: transparent; font-weight: 700; }
+.pestanas button[aria-selected="true"] { background: #fff; color: var(--verde); box-shadow: 0 1px 3px #23452b22; }
+.controles { display: grid; gap: 8px; margin-top: 10px; }
+.controles[hidden] { display: none; }
+.escenarios { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.escenarios button { padding: 7px 6px; }
+.reproductor { display: grid; grid-template-columns: auto minmax(0, 1fr) 44px; align-items: center; gap: 10px; font-size: 13px; }
+.reproductor input { width: 100%; min-width: 0; }
+.reproductor output { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+#controles-alb { grid-template-columns: auto minmax(0, 1fr); align-items: center; font-size: 13px; }
+#controles-alb select { width: 100%; }
+#controles-alb .primario { grid-column: 1 / -1; }
+.herramientas { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 10px 0 0; }
+.herramientas button { padding: 4px 9px; font-size: 12px; border-radius: 999px; }
+.herramientas .casilla { margin-left: auto; }
+.casilla { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; white-space: nowrap; }
+.tarjeta { margin: 10px 0; padding: 10px 12px; font-size: 12px; line-height: 1.5; color: var(--suave); background: #fff; border: 1px solid var(--borde); border-radius: 12px; }
+.tarjeta[hidden] { display: none; }
+.tarjeta > h3 { margin: 0 0 8px; font-size: 13px; color: var(--tinta); }
+details.tarjeta > summary { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 13px; font-weight: 700; color: var(--tinta); cursor: pointer; list-style: none; }
+details.tarjeta > summary::-webkit-details-marker { display: none; }
+details.tarjeta > summary::after { content: "▾"; margin-left: auto; color: var(--suave); }
+details.tarjeta:not([open]) > summary::after { content: "▸"; }
+details.tarjeta[open] > summary { margin-bottom: 8px; }
+details.tarjeta p { margin: 6px 0; }
+.cuenta { padding: 0 8px; font-size: 11px; font-weight: 700; color: #fff; background: var(--verde); border-radius: 999px; }
+.cuenta:empty { display: none; }
+.rejilla { display: grid; grid-template-columns: 80px minmax(0, 1fr) 58px; align-items: center; gap: 8px 10px; font-size: 13px; color: var(--tinta); }
+.rejilla input, .rejilla select { width: 100%; min-width: 0; }
+.rejilla .ancho { grid-column: 2 / 4; }
+.rejilla output { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.elegir { padding: 4px 9px; font-size: 12px; border-radius: 999px; }
+.elegir[aria-pressed="true"] { background: #e8913a; border-color: #e8913a; color: #fff; }
+.nota { margin: 6px 0 0; font-size: 11.5px; line-height: 1.5; color: var(--suave); }
+.nota:empty, .nota[hidden] { display: none; }
+.kpi { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; margin: 0; color: var(--tinta); }
+.kpi strong { font: 800 22px/1.2 Manrope, "DM Sans", system-ui, sans-serif; }
+.kpi span { font-size: 12px; color: var(--suave); }
+.sub { margin: 2px 0 8px; font-size: 12px; color: var(--suave); }
+.barras { display: grid; grid-template-columns: 88px minmax(0, 1fr) 62px; align-items: center; gap: 5px 8px; margin: 4px 0; font-size: 12px; color: var(--tinta); }
+.barras .b { height: 8px; overflow: hidden; background: #eef0ec; border-radius: 4px; }
+.barras .b i { display: block; height: 100%; min-width: 2px; border-radius: 4px; }
+.barras .v { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.comparacion { margin-top: 8px; padding: 8px 10px; font-size: 11.5px; background: var(--crema); border-radius: 8px; }
+.lista { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; counter-reset: puesto; }
+.lista > li { position: relative; min-width: 0; padding: 8px 10px; font-size: 12px; line-height: 1.45; color: var(--suave); background: #fbfcfa; border: 1px solid #e6ebe5; border-radius: 10px; }
+ol.lista > li { padding-left: 36px; counter-increment: puesto; }
+ol.lista > li::before { content: counter(puesto); position: absolute; top: 8px; left: 9px; display: grid; place-items: center; width: 19px; height: 19px; font-size: 11px; font-weight: 700; color: #fff; background: #1f8a4c; border-radius: 50%; }
+.lista .nombre { display: block; overflow: hidden; padding-right: 48px; font-size: 13px; font-weight: 700; color: var(--tinta); white-space: nowrap; text-overflow: ellipsis; }
+.lista .dato { display: block; }
+.lista .puntaje { position: absolute; top: 7px; right: 10px; font: 800 14px Manrope, "DM Sans", system-ui, sans-serif; color: var(--verde); }
+.barra { display: flex; height: 6px; margin: 5px 0 4px; overflow: hidden; background: #eceee9; border-radius: 3px; }
+.barra i { display: block; height: 100%; }
+.acciones { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.acciones a, .acciones button { padding: 3px 9px; font-size: 11px; white-space: nowrap; color: var(--verde); text-decoration: none; background: #fff; border: 1px solid var(--borde); border-radius: 999px; }
+.tipo { display: inline-block; margin: 2px 4px 2px 0; padding: 0 7px; font-size: 10.5px; font-weight: 700; border-radius: 999px; }
+.tipo.oficial { color: #1f5f9e; background: #e3eef8; }
+.tipo.autogestionado { color: #8a4b0f; background: #fbeedd; }
+.tipo.acopio { color: #4d3480; background: #efe9fa; }
+.alerta { display: block; margin-top: 3px; font-weight: 600; color: #a33b20; }
+.coincide { display: block; margin-top: 3px; font-weight: 600; color: #1f8a4c; }
+.leyenda-criterios { display: flex; flex-wrap: wrap; gap: 3px 10px; margin: 10px 0 0; font-size: 11px; color: var(--suave); }
+.leyenda-criterios i { display: inline-block; width: 10px; height: 10px; margin-right: 4px; vertical-align: -1px; border-radius: 2px; }
+#matriz-casos { scroll-margin-top: 150px; }
+.chips { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 4px; }
+.chips span { padding: 0 7px; font-size: 10.5px; color: var(--tinta); background: #eef3ef; border-radius: 999px; }
+.ficha { position: absolute; top: 44px; right: 12px; z-index: 3; width: min(340px, calc(100% - 24px)); max-height: calc(100% - 120px); overflow: auto; padding: 12px 14px; font-size: 13px; line-height: 1.5; background: #fff; border: 1px solid var(--borde); border-radius: 12px; box-shadow: 0 8px 24px #23452b26; }
+.ficha[hidden] { display: none; }
+.ficha h4 { margin: 0 24px 6px 0; font-size: 14px; }
+.ficha p { margin: 4px 0; }
+.ficha .cerrar, .ra-cabeza button { position: absolute; top: 6px; right: 6px; padding: 2px 8px; font-size: 18px; line-height: 1; border: 0; background: transparent; }
+dialog#dialogo-ra { width: min(720px, 94vw); padding: 0; border: 1px solid var(--borde); border-radius: 14px; }
+dialog#dialogo-ra::backdrop { background: #193e3b80; }
+.ra-cabeza { position: relative; padding: 12px 16px; border-bottom: 1px solid var(--borde); }
+#ra-visor { height: min(60vh, 460px); background: #eef3f6; }
+#ra-visor model-viewer { width: 100%; height: 100%; }
+#ra-nota { padding: 0 16px 12px; }
+@media (max-width: 900px) {
+  html, body { height: auto; }
+  .cabecera { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .diseno { grid-template-columns: 1fr; }
+  .visor { height: 62vh; }
+  .cuadro { border-left: 0; border-top: 1px solid var(--borde); }
+  .leyenda { max-width: calc(100% - 24px); }
+}
+</style>
+</head>
+<body>
+<header class="cabecera">
+  <div>
+    <p class="marca">Territorio Preparado · RETO-01 Cali Activa</p>
+    <h1>Simulación de escenarios en Santiago de Cali</h1>
+  </div>
+  <p class="aviso">Herramienta de preparación: muestra capas oficiales y ejercicios sobre una maqueta 3D de la ciudad. No es un pronóstico ni autoriza el uso de ningún espacio. La herramienta recomienda; la decisión la toma una persona autorizada.</p>
+</header>
+<main class="diseno">
+  <section class="visor" id="visor" aria-label="Maqueta 3D de Cali">
+    <p class="cargando" id="cargando" role="status">Cargando la maqueta de Cali…</p>
+    <div class="leyenda" id="leyenda" aria-label="Leyenda"></div>
+    <div class="ficha" id="ficha" hidden role="dialog" aria-label="Detalle"><button type="button" class="cerrar" id="cerrar-ficha" aria-label="Cerrar">×</button><div id="ficha-contenido"></div></div>
+    <p class="ayuda">Arrastra para girar · rueda para acercar · clic derecho para desplazar · de cerca aparecen los edificios reales</p>
+  </section>
+  <aside class="cuadro" aria-label="Cuadro de simulación">
+    <div class="cuadro-cabeza">
+      <div class="pestanas" role="tablist" aria-label="Secciones">
+        <button type="button" role="tab" id="tab-simulacion" aria-selected="true" aria-controls="panel-simulacion">Simulación</button>
+        <button type="button" role="tab" id="tab-albergues" aria-selected="false" aria-controls="panel-albergues">Albergues</button>
+      </div>
+      <div class="controles" id="controles-sim">
+        <div class="escenarios" role="group" aria-label="Escenario">
+          <button type="button" data-escenario="inundacion">Inundación</button>
+          <button type="button" data-escenario="sismo">Sismo</button>
+          <button type="button" data-escenario="incendio">Incendio</button>
+        </div>
+        <div class="reproductor">
+          <button type="button" id="simular" class="primario">▶ Simular</button>
+          <input id="avance" type="range" min="0" max="1" step="0.01" value="1" aria-label="Avance de la simulación">
+          <output id="avance-valor">100 %</output>
+        </div>
+      </div>
+      <div class="controles" id="controles-alb" hidden>
+        <label for="caso">Caso</label>
+        <select id="caso"></select>
+        <button type="button" id="analizar-todos" class="primario">Analizar todos los casos</button>
+      </div>
+    </div>
+
+    <section id="panel-simulacion" role="tabpanel" aria-labelledby="tab-simulacion">
+      <div class="herramientas">
+        <button type="button" id="vista-zona">Zona más afectada</button>
+        <button type="button" id="vista-centro">Centro</button>
+        <button type="button" id="vista-general">Vista general</button>
+        <label class="casilla"><input id="analitico" type="checkbox"> Colores de análisis</label>
+      </div>
+      <section class="tarjeta" id="opciones-sismo" hidden>
+        <h3>Parámetros del sismo</h3>
+        <div class="rejilla">
+          <label for="magnitud" title="Magnitud de momento (Mw): la que reportan hoy el SGC y el USGS; reemplazó a la escala de Richter.">Magnitud</label>
+          <input id="magnitud" type="range" min="4" max="8.5" step="0.1" value="7.4">
+          <output id="magnitud-valor">7,4</output>
+          <label for="profundidad">Profundidad</label>
+          <input id="profundidad" type="range" min="5" max="150" step="1" value="103">
+          <output id="profundidad-valor">103 km</output>
+          <label for="epicentro">Epicentro</label>
+          <select id="epicentro" class="ancho">
+            <option value="real">Sismo real 10-ago-2026 (SGC)</option>
+            <option value="cali">Hipotético bajo el centro de Cali</option>
+            <option value="mapa" disabled>Punto elegido en la maqueta</option>
+          </select>
+        </div>
+        <div class="acciones">
+          <button type="button" class="elegir" data-elegir="epicentro">📍 Elegir epicentro en la maqueta</button>
+          <label class="casilla"><input id="ver-danos" type="checkbox" checked> Daños observados el 10-ago</label>
+        </div>
+        <p class="nota">Magnitud de momento (Mw), la escala que reemplazó a la de Richter.</p>
+      </section>
+      <section class="tarjeta" id="opciones-incendio" hidden>
+        <h3>Ejercicio de incendio</h3>
+        <div class="rejilla">
+          <label for="inicio">Inicio</label>
+          <select id="inicio" class="ancho"></select>
+          <label for="viento">Viento hacia</label>
+          <select id="viento" class="ancho">
+            <option value="0">el norte</option>
+            <option value="90" selected>el este (hacia la ciudad)</option>
+            <option value="180">el sur</option>
+            <option value="270">el oeste (ladera arriba)</option>
+          </select>
+          <label for="margen">Margen</label>
+          <input id="margen" type="range" min="100" max="1000" step="50" value="300">
+          <output id="margen-valor">300 m</output>
+        </div>
+        <div class="acciones"><button type="button" class="elegir" data-elegir="ignicion">📍 Elegir inicio en la maqueta</button></div>
+        <p class="nota" id="focos-firms"></p>
+        <p class="nota" id="aviso-incendio" role="status"></p>
+      </section>
+      <section class="tarjeta">
+        <h3>Resultados</h3>
+        <div id="resumen" aria-live="polite"></div>
+      </section>
+      <details class="tarjeta" open>
+        <summary>Sitios sugeridos para acopio <span class="cuenta" id="cuenta-acopios"></span></summary>
+        <p class="nota" id="acopios-espera" hidden>Lleva el avance al 100 % para ver los sitios sugeridos.</p>
+        <ol class="lista" id="acopios"></ol>
+        <p class="nota" id="acopios-motivo"></p>
+        <p class="nota" id="criterio"></p>
+      </details>
+      <details class="tarjeta">
+        <summary>¿Qué muestra este escenario?</summary>
+        <p id="fuente"></p>
+      </details>
+    </section>
+
+    <section id="panel-albergues" role="tabpanel" aria-labelledby="tab-albergues" hidden>
+      <div class="leyenda-criterios" id="leyenda-criterios"></div>
+      <div id="matriz-casos"></div>
+      <details class="tarjeta" open>
+        <summary>Puntos más adecuados <span class="cuenta" id="cuenta-sugeridos"></span></summary>
+        <ol class="lista" id="albergues-sugeridos"></ol>
+      </details>
+      <details class="tarjeta" open>
+        <summary>Albergues reales tras el sismo <span class="cuenta" id="cuenta-reales"></span></summary>
+        <ul class="lista" id="albergues-reales"></ul>
+      </details>
+      <details class="tarjeta">
+        <summary>¿Cómo se califica?</summary>
+        <p>Para cada caso se califican los espacios públicos y escenarios deportivos de al menos 1.000 m² con cinco criterios a la vista, y se comparan con los albergues que se instalaron de verdad tras el sismo del 10-ago-2026.</p>
+        <p id="criterios"></p>
+      </details>
+    </section>
+    <details class="tarjeta">
+      <summary>Cómo se hizo, fuentes y límites</summary>
+      <p><strong>Maqueta:</strong> terreno de 24 × 23 km calculado a partir de las curvas de nivel oficiales. De cerca, 634.239 edificios reales del catastro, cada uno con su huella y su altura (pisos × 3 m); el 43 % no tiene dato de pisos y se dibuja de 1 piso. Se omiten 79.624 construcciones menores de 4 m² (casetas y tanques). De lejos, la volumetría por manzana. Fachadas, ventanas y techos son ilustrativos.</p>
+      <p><strong>Sismo:</strong> intensidad con Allen, Wald y Worden (2012), versión con distancia hipocentral (coeficientes de OpenQuake, Fundación GEM). Suelo blando (zonas de licuación o corrimiento de la IDESC): +0,5 grados, supuesto. Sismos de 50 km o más de profundidad: +0,7 grados, calibrados para que el sismo real del 10-ago-2026 dé intensidad VI en el centro de Cali; el SGC reportó hasta VII. Daño por edificio con el método macrosísmico (Lagomarsino y Giovinazzi 2006, EMS-98) y vulnerabilidad supuesta por pisos: 1-2 pisos clase B, 3-5 clase C, 6 o más clase D.</p>
+      <p><strong>Inundación:</strong> zonas de amenaza del POT 2014 y del expediente municipal. Profundidad representativa de cada rango oficial: baja 0,3 m, media 0,7 m y alta 1,5 m.</p>
+      <p><strong>Incendio:</strong> ejercicio sobre 40.488 celdas de cobertura boscosa oficial y 38.441 de ladera no urbana sobre 1.050 m (supuesto). Focos reales de NASA FIRMS (VIIRS y MODIS, últimos 5 días al momento de armar el archivo).</p>
+      <p><strong>Acopios:</strong> misma regla de la herramienta Territorio Preparado. Inundación y sismo descartan los espacios que cruzan la capa oficial; el incendio descarta los que quedan dentro del área quemada o de su margen. Las fotos de calle son de Mapillary (CC BY-SA).</p>
+      <p><strong>Fuentes:</strong> Alcaldía de Santiago de Cali, DAPM / IDESC (catastro: construcciones y manzanas; POT 2014: inundación, efectos sísmicos, ríos y cobertura boscosa; espacio público efectivo; escenarios deportivos), CC BY-SA. Relieve: curvas de nivel del POT 2014 (IDESC, cada 10 m) y, fuera de su cobertura, SRTM de la NASA (Terrain Tiles, AWS Open Data). Direcciones: nomenclatura domiciliaria (IDESC). Sismo del 10-ago-2026: SGC (epicentro y profundidad), UNGRD y Alcaldía (balances). Daños: © Copernicus EMS EMSR916; © ICube-SERTIT 2026 / International Charter; Microsoft AI for Good / Airbus vía HDX; MEN. Focos de calor: NASA FIRMS (LANCE). Fotos de calle: Mapillary, CC BY-SA.</p>
+      <p><strong>Límites:</strong> la licencia de las capas del catastro no está declarada en el servicio WFS (verificar con la Subdirección de Catastro). No hay inventario estructural abierto: la vulnerabilidad por pisos es un supuesto. Es una herramienta para preparar, no un pronóstico ni una evaluación de edificaciones.</p>
+    </details>
+  </aside>
+</main>
+<dialog id="dialogo-ra" aria-label="Albergue en realidad aumentada">
+  <div class="ra-cabeza"><strong id="ra-titulo">Albergue</strong><button type="button" id="cerrar-ra" aria-label="Cerrar">×</button></div>
+  <div id="ra-visor"></div>
+  <p class="nota" id="ra-nota"></p>
+</dialog>
+<!--DATOS-->
+<!--SCRIPT-->
+</body>
+</html>

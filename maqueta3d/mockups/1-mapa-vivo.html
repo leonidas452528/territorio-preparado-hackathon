@@ -1,0 +1,87 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>Propuesta 1: Mapa vivo</title><meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="comun.css">
+<style>
+:root { --tinta: #0d1b2a; --seguro: #0b6b45; --peligro: #ff5a1f; --vidrio: rgba(255,255,255,.88); }
+.frame { color: var(--tinta); background: #dfe6ea; }
+.fondo { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.sup { position: absolute; z-index: 3; top: 20px; left: 24px; right: 24px; display: flex; align-items: center; gap: 12px; }
+.marca { font: 800 20px Manrope; letter-spacing: -.02em; display: flex; gap: 10px; align-items: center; }
+.sello { width: 34px; height: 34px; border-radius: 8px; background: var(--seguro); color: #fff; display: grid; place-items: center; font: 800 14px Manrope; }
+.chip { background: var(--vidrio); backdrop-filter: blur(10px); border-radius: 999px; padding: 9px 16px; font-weight: 600; box-shadow: 0 2px 10px #0002; }
+.sup .der { margin-left: auto; display: flex; gap: 8px; }
+.vidrio { background: var(--vidrio); backdrop-filter: blur(14px); border-radius: 18px; box-shadow: 0 8px 30px #0003; }
+/* home */
+.home .velo { position: absolute; inset: 0; background: linear-gradient(90deg, #fff 0%, #ffffffec 34%, #fff0 66%); }
+.home .texto { position: absolute; z-index: 2; left: 64px; top: 150px; width: 640px; }
+.home h1 { font: 800 70px/1 Manrope; letter-spacing: -.04em; margin-bottom: 24px; }
+.home h1 em { font-style: normal; color: var(--peligro); }
+.home p { font-size: 21px; line-height: 1.5; color: #3b4b5c; margin-bottom: 32px; }
+.btn { display: inline-block; padding: 16px 26px; border-radius: 14px; font: 700 18px "DM Sans"; margin-right: 10px; }
+.btn.p { background: var(--tinta); color: #fff; } .btn.s { background: #fff; border: 2px solid var(--tinta); }
+.dato { position: absolute; z-index: 2; right: 40px; bottom: 40px; width: 430px; padding: 24px 26px; }
+.dato .n { font: 800 64px/1 Manrope; letter-spacing: -.03em; color: var(--peligro); }
+.dato small { display: block; margin-top: 8px; color: #46586a; font-size: 15px; line-height: 1.4; }
+.dato .tag { display: inline-block; background: #fff2d6; border: 1px solid #e6a100; color: #7a5400; border-radius: 99px; padding: 3px 10px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+.pasos { position: absolute; z-index: 2; left: 64px; bottom: 44px; display: flex; gap: 14px; }
+.pasos div { padding: 14px 18px; width: 210px; font-size: 15px; line-height: 1.35; }
+.pasos b { display: block; font: 800 16px Manrope; margin-bottom: 2px; }
+/* herramienta */
+.riel { position: absolute; z-index: 3; left: 20px; top: 84px; display: grid; gap: 6px; padding: 8px; }
+.riel span { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 12px; font: 700 11px "DM Sans"; text-align: center; color: #3b4b5c; }
+.riel span.on { background: var(--tinta); color: #fff; }
+.escenario { position: absolute; z-index: 3; left: 96px; top: 84px; width: 330px; padding: 20px; }
+.escenario h3 { font: 800 20px Manrope; margin-bottom: 14px; }
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); background: #e5ebef; border-radius: 12px; padding: 4px; margin-bottom: 18px; }
+.seg span { text-align: center; padding: 9px 0; border-radius: 9px; font-weight: 600; font-size: 15px; }
+.seg span.on { background: #fff; box-shadow: 0 1px 4px #0003; }
+.ctl { margin-bottom: 16px; font-size: 14px; color: #46586a; } .ctl b { color: var(--tinta); font-size: 17px; float: right; }
+.barra { height: 8px; background: #d3dce2; border-radius: 9px; margin-top: 8px; position: relative; } .barra i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--tinta); border-radius: 9px; } .barra u { position: absolute; top: -5px; width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 3px solid var(--tinta); }
+.resultado { position: absolute; z-index: 3; right: 24px; top: 84px; width: 370px; padding: 22px; }
+.resultado .n { font: 800 58px/1 Manrope; letter-spacing: -.03em; color: var(--peligro); }
+.resultado .e { font-size: 14px; color: #46586a; margin: 6px 0 16px; line-height: 1.4; }
+.g { display: grid; grid-template-columns: 110px 1fr 70px; gap: 8px; align-items: center; font-size: 14px; margin: 5px 0; } .g i { display: block; height: 10px; border-radius: 6px; } .g span:last-child { text-align: right; font-weight: 700; }
+.dock { position: absolute; z-index: 3; left: 50%; transform: translateX(-50%); bottom: 24px; display: flex; gap: 8px; padding: 10px; align-items: center; }
+.dock span { padding: 10px 16px; border-radius: 12px; font-weight: 600; } .dock span.on { background: var(--tinta); color: #fff; }
+.pin { position: absolute; z-index: 2; width: 34px; height: 34px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--seguro); border: 3px solid #fff; display: grid; place-items: center; box-shadow: 0 3px 10px #0005; }
+.pin b { transform: rotate(45deg); color: #fff; font: 800 14px Manrope; }
+/* móvil */
+.movil .hoja { position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; background: #fff; border-radius: 26px 26px 0 0; padding: 12px 22px 26px; box-shadow: 0 -10px 30px #0004; }
+.movil .asa { width: 44px; height: 5px; background: #cdd6dc; border-radius: 9px; margin: 0 auto 16px; }
+.movil h3 { font: 800 25px/1.15 Manrope; letter-spacing: -.02em; margin-bottom: 8px; } .movil p { color: #46586a; font-size: 16px; line-height: 1.4; margin-bottom: 14px; }
+.num { border: 2px solid var(--tinta); border-radius: 16px; padding: 14px 18px; font: 800 44px Manrope; display: flex; justify-content: space-between; align-items: baseline; } .num small { font: 500 16px "DM Sans"; color: #46586a; }
+.fichas { display: flex; gap: 8px; margin: 14px 0 18px; flex-wrap: wrap; } .fichas span { border: 1.5px solid #b8c4cc; border-radius: 99px; padding: 8px 14px; font-weight: 600; } .fichas .on { background: var(--tinta); color: #fff; border-color: var(--tinta); }
+.btn.grande { display: block; text-align: center; background: var(--seguro); color: #fff; padding: 18px; font-size: 19px; margin: 0; }
+.prog { display: flex; gap: 6px; margin-bottom: 14px; } .prog i { flex: 1; height: 5px; border-radius: 9px; background: #d3dce2; } .prog i.on { background: var(--seguro); }
+</style>
+<body>
+<div class="meta"><b>Propuesta 1 · Mapa vivo</b>La ciudad es la interfaz. Todo se ve sobre el mapa 3D a pantalla completa; los controles son paneles de vidrio que flotan y se apartan. Abre con una pregunta concreta, con un escenario real de fondo. Pensada para entidades y para mostrar en una pantalla grande (feria, sala).</div>
+
+<div class="frame home">
+  <div class="fondo" style="background-image:url(assets/sismo.png)"></div><div class="velo"></div>
+  <div class="sup"><div class="marca"><span class="sello">TP</span>Territorio Preparado</div><span class="chip">Cali, Colombia ▾</span><div class="der"><span class="chip">Entidades</span><span class="chip">Comunidad</span><span class="chip">Aliados</span></div></div>
+  <div class="texto"><h1>Si hoy tiembla en Cali, ¿<em>dónde</em> acogemos a la gente?</h1><p>Territorio Preparado junta los espacios de la ciudad, las amenazas y los reportes mensuales de su comunidad para que quien decide llegue con un plan.</p><span class="btn p">Entrar como entidad</span><span class="btn s">Quiero aportar datos</span></div>
+  <div class="pasos"><div class="vidrio"><b>1 · La comunidad reporta</b>Cada mes, solo conteos.</div><div class="vidrio"><b>2 · El sistema verifica</b>Errores marcados, datos con historial.</div><div class="vidrio"><b>3 · La entidad decide</b>Simula, mira el espacio y prepara.</div></div>
+  <div class="dato vidrio"><span class="tag">Escenario ilustrativo · Mw 7,0 bajo Cali</span><div class="n">228.001</div><small>construcciones con daño importante o mayor, de 693.468 (modelo estadístico, no es un pronóstico).</small></div>
+</div>
+
+<div class="frame">
+  <div class="fondo" style="background-image:url(assets/sismo.png)"></div>
+  <div class="sup"><div class="marca"><span class="sello">TP</span>Entidades <span style="font-weight:500;color:#46586a">/ Simular una amenaza</span></div><div class="der"><span class="chip">Cali ▾</span><span class="chip">Ayuda</span></div></div>
+  <div class="riel vidrio"><span>Mapa</span><span class="on">Simular</span><span>Refugio</span><span>Preparar</span><span>Datos</span></div>
+  <div class="escenario vidrio"><h3>Escenario</h3><div class="seg"><span>Inundación</span><span class="on">Sismo</span><span>Incendio</span></div>
+    <div class="ctl">Magnitud <b>Mw 7,0</b><div class="barra"><i style="width:68%"></i><u style="left:calc(68% - 9px)"></u></div></div>
+    <div class="ctl">Profundidad <b>15 km</b><div class="barra"><i style="width:7%"></i><u style="left:calc(7% - 9px)"></u></div></div>
+    <div class="ctl">Epicentro <b style="font-size:15px">Bajo el centro</b></div><span class="btn s" style="margin:0;padding:12px 16px;font-size:15px">📍 Elegir en el mapa</span></div>
+  <div class="resultado vidrio"><div class="e">Daño importante o mayor (G3–G5)</div><div class="n">228.001</div><div class="e">de 693.468 construcciones · intensidad VIII en el centro</div>
+    <div class="g"><span>Sin daño</span><i style="background:#9bbf6a;width:20%"></i><span>57.300</span></div><div class="g"><span>Leve</span><i style="background:#d8c24a;width:60%"></i><span>176.332</span></div><div class="g"><span>Moderado</span><i style="background:#e8913a;width:80%"></i><span>231.835</span></div><div class="g"><span>Sustancial</span><i style="background:#c43a1c;width:55%"></i><span>160.867</span></div><div class="g"><span>Muy grave</span><i style="background:#8a1c1c;width:20%"></i><span>58.358</span></div></div>
+  <div class="pin" style="left:760px;top:420px"><b>1</b></div><div class="pin" style="left:880px;top:500px"><b>2</b></div><div class="pin" style="left:690px;top:560px"><b>3</b></div>
+  <div class="dock vidrio"><span>General</span><span class="on">Centro</span><span>Oriente y Jarillón</span><span>Ladera oeste</span><span>▶ Simular</span></div>
+</div>
+
+<div class="fila">
+  <div class="frame movil"><div class="fondo" style="background-image:url(assets/mapa.png);background-position:55% 50%"></div>
+    <div class="sup" style="top:16px"><span class="chip">Cali ▾</span><div class="der"><span class="chip">Comunidad</span></div></div>
+    <div class="hoja"><div class="asa"></div><div class="prog"><i class="on"></i><i></i><i></i></div><h3>Reporte de octubre · paso 1 de 3</h3><p>¿Cuántas personas podría alojar tu salón comunal?</p><div class="num">120<small>personas</small></div><div class="fichas"><span class="on">Salón comunal</span><span>Parqueadero</span><span>Cancha</span><span>Otro</span></div><span class="btn grande">Siguiente</span></div></div>
+  <div class="meta" style="max-width:520px;color:#fff;align-self:center"><b>Móvil</b>Para la comunidad el mapa queda de fondo y el reporte es una hoja inferior con un paso por pantalla, un número grande y un botón. Se llena con el pulgar, sin tablas.</div>
+</div>
+</body></html>

@@ -1,0 +1,3 @@
+ciudad_id,periodo,codigo_organizacion,tipo_reporte,espacio_id,n_total,n_0_5,n_6_17,n_18_59,n_60_mas,n_discapacidad,n_animales_compania,observacion
+cali-co,2026-10,demo-conjunto-01,estado_espacio,demo-salon-01,120,10,25,70,15,4,12,Fila de ejemplo: datos simulados.
+cali-co,2026-10,demo-jac-01,necesidad,,,,,,,,,Fila de ejemplo: faltan colchonetas y agua.

@@ -1,0 +1,35 @@
+# ☀️ Asistente Solar Rural — Dependencias
+# Instalar: pip install -r requirements.txt
+
+# ── Backend API ──────────────────────────────────────────────────
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# ── ML: Predicción energética ────────────────────────────────────
+scikit-learn>=1.4.0
+joblib>=1.3.0
+numpy>=1.26.0
+
+# ── Visión artificial (YOLOv8) ───────────────────────────────────
+ultralytics>=8.0.0
+
+# ── LLM local (GGUF via llama.cpp) ──────────────────────────────
+# Opción 1: binario precompilado (más fácil en Windows/Mac)
+# llama-cpp-python --prefer-binary
+# Opción 2: compilar con soporte CPU/Metal
+llama-cpp-python>=0.2.0
+
+# ── RAG (Plan B si no hay modelo GGUF) ──────────────────────────
+chromadb>=0.5.0
+sentence-transformers>=3.0.0
+
+# ── Túnel público ngrok ──────────────────────────────────────────
+pyngrok>=7.0.0
+
+# ── LLM en la nube (Gemini — prioridad máxima) ──────────────────
+google-generativeai>=0.8.0
+
+# ── Utilitarios ──────────────────────────────────────────────────
+python-dotenv>=1.0.0
+requests>=2.31.0
+Pillow>=10.0.0

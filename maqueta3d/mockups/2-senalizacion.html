@@ -1,0 +1,76 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>Propuesta 2: Señalización</title><meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="comun.css">
+<style>
+:root { --negro: #111; --verde: #00873d; --amarillo: #ffc800; --rojo: #d4002a; --azul: #0057b8; --papel: #fbfbf8; }
+.frame { background: var(--papel); color: var(--negro); }
+.cab { height: 64px; background: var(--negro); color: #fff; display: flex; align-items: center; padding: 0 32px; gap: 28px; font: 800 20px Manrope; }
+.cab nav { margin-left: auto; display: flex; gap: 26px; font: 700 17px "DM Sans"; } .cab nav .on { border-bottom: 4px solid var(--amarillo); padding-bottom: 4px; }
+.cab .c { font: 600 15px "DM Sans"; border: 2px solid #fff; padding: 6px 12px; border-radius: 6px; }
+/* home */
+.hero { display: grid; grid-template-columns: 1fr 640px; height: calc(100% - 64px); }
+.izq { padding: 56px 48px 40px 56px; display: flex; flex-direction: column; justify-content: space-between; border-right: 4px solid var(--negro); }
+.izq h1 { font: 800 96px/.95 Manrope; letter-spacing: -.045em; }
+.izq p { font-size: 22px; line-height: 1.45; max-width: 600px; margin-top: 22px; }
+.niv { display: grid; grid-template-columns: repeat(3, 1fr); border: 4px solid var(--negro); } .niv div { padding: 14px 16px; border-right: 4px solid var(--negro); font-size: 15px; line-height: 1.35; } .niv div:last-child { border: 0; } .niv b { display: block; font: 800 20px Manrope; margin-bottom: 4px; }
+.niv div:nth-child(1) { background: #cfe9da; } .niv div:nth-child(2) { background: #8fd0ad; } .niv div:nth-child(3) { background: var(--verde); color: #fff; }
+.señales { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+.sen { padding: 28px; display: flex; flex-direction: column; justify-content: space-between; border-bottom: 4px solid var(--negro); } .sen:nth-child(odd) { border-right: 4px solid var(--negro); } .sen:nth-child(n+3) { border-bottom: 0; }
+.sen h2 { font: 800 31px/1.05 Manrope; letter-spacing: -.02em; } .sen p { font-size: 16px; line-height: 1.35; margin-top: 8px; }
+.sen svg { width: 120px; height: 120px; }
+.v { background: var(--verde); color: #fff; } .a { background: var(--amarillo); } .z { background: var(--azul); color: #fff; } .r { background: var(--rojo); color: #fff; }
+/* herramienta */
+.tab { display: flex; border-bottom: 4px solid var(--negro); } .tab span { padding: 16px 24px; font: 700 17px "DM Sans"; border-right: 2px solid var(--negro); } .tab span.on { background: var(--verde); color: #fff; }
+.cuerpo { display: grid; grid-template-columns: 520px 1fr; height: calc(100% - 64px - 56px); }
+.lista { border-right: 4px solid var(--negro); overflow: hidden; }
+.lista h2 { font: 800 30px Manrope; padding: 20px 24px 12px; letter-spacing: -.02em; }
+.fil { display: grid; grid-template-columns: 56px 1fr auto; gap: 14px; align-items: center; padding: 14px 24px; border-top: 2px solid var(--negro); }
+.fil .ic { width: 56px; height: 56px; border-radius: 10px; background: var(--verde); display: grid; place-items: center; color: #fff; font: 800 24px Manrope; }
+.fil b { font: 800 19px Manrope; display: block; } .fil small { font-size: 15px; color: #444; }
+.est { font: 800 12px "DM Sans"; padding: 6px 10px; border-radius: 4px; background: var(--amarillo); } .est.ok { background: var(--verde); color: #fff; }
+.mapa { position: relative; background: url(assets/mapa.png) center/cover; }
+.leyenda { position: absolute; left: 20px; bottom: 20px; background: #fff; border: 4px solid var(--negro); padding: 14px 18px; display: grid; gap: 6px; font-weight: 700; font-size: 15px; } .leyenda i { display: inline-block; width: 16px; height: 16px; margin-right: 8px; vertical-align: -2px; }
+.sim { position: absolute; right: 20px; top: 20px; width: 320px; background: var(--amarillo); border: 4px solid var(--negro); padding: 16px 18px; } .sim b { font: 800 44px/1 Manrope; display: block; } .sim span { font-size: 15px; font-weight: 700; }
+/* móvil */
+.movil .cab { height: 56px; padding: 0 16px; font-size: 17px; } .movil .cuerpo2 { padding: 18px; }
+.movil h2 { font: 800 31px/1.05 Manrope; letter-spacing: -.03em; margin-bottom: 14px; }
+.pasos { display: flex; gap: 8px; margin-bottom: 16px; } .pasos span { flex: 1; text-align: center; padding: 10px 0; border: 3px solid var(--negro); font: 800 18px Manrope; } .pasos .on { background: var(--azul); color: #fff; }
+.pregunta { border: 4px solid var(--negro); padding: 16px; font: 700 20px/1.25 "DM Sans"; margin-bottom: 14px; }
+.btn2 { display: flex; justify-content: space-between; align-items: center; padding: 20px 18px; margin-bottom: 10px; border: 4px solid var(--negro); font: 800 22px Manrope; } .btn2 small { font: 500 15px "DM Sans"; display: block; }
+.prohi { display: grid; grid-template-columns: 64px 1fr; gap: 12px; align-items: center; border: 4px solid var(--rojo); padding: 12px; font-size: 15px; line-height: 1.3; margin-top: 14px; } .prohi b { color: var(--rojo); }
+</style>
+<body>
+<div class="meta"><b>Propuesta 2 · Señalización</b>Usa el lenguaje que todo el mundo ya entiende en una emergencia: las señales de seguridad. Cuatro colores con significado fijo: verde = espacios y acopio, amarillo = simulado o por confirmar, azul = acciones de la comunidad, rojo = lo que no se hace (datos personales). Muy legible, funciona bien en móvil y en papel.</div>
+
+<div class="frame">
+  <div class="cab">Territorio Preparado<span class="c">Cali, CO ▾</span><nav><span class="on">Inicio</span><span>Entidades</span><span>Comunidad</span><span>Aliados</span></nav></div>
+  <div class="hero">
+    <div class="izq"><div><h1>Sepa dónde acoger ayuda.</h1><p>Antes de que llegue la emergencia, la ciudad necesita saber qué espacios tiene, qué amenazas la rodean y qué le falta. Cada mes, su comunidad lo actualiza con números, no con nombres.</p></div>
+      <div><p style="font:800 18px Manrope;margin:0 0 10px">Cada ciudad tiene un nivel de detalle</p><div class="niv"><div><b>Mapa</b>Cualquier ciudad, solo con CSV.</div><div><b>Edificios</b>3D automático con datos abiertos.</div><div><b>Maqueta</b>3D curado. Hoy: Cali.</div></div></div></div>
+    <div class="señales">
+      <div class="sen v"><svg viewBox="0 0 100 100"><circle cx="30" cy="22" r="8" fill="#fff"/><path d="M30 34v22l-10 20M30 56l12 20M30 40l-14 10M30 40l16 6" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M62 64h26M78 54l12 10-12 10" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><div><h2>Espacios y acopio</h2><p>Mapa de la ciudad y sus puntos de encuentro.</p></div></div>
+      <div class="sen a"><svg viewBox="0 0 100 100"><path d="M50 10L94 88H6Z" fill="none" stroke="#111" stroke-width="8" stroke-linejoin="round"/><path d="M50 38v26" stroke="#111" stroke-width="9" stroke-linecap="round"/><circle cx="50" cy="76" r="5" fill="#111"/></svg><div><h2>Simular una amenaza</h2><p>Sismo, inundación o incendio. Tú eliges.</p></div></div>
+      <div class="sen z"><svg viewBox="0 0 100 100"><rect x="24" y="14" width="52" height="72" rx="6" fill="none" stroke="#fff" stroke-width="7"/><path d="M36 42l8 8 16-16M36 66h28" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><div><h2>Enviar reporte mensual</h2><p>Para conjuntos, JAC y aliados.</p></div></div>
+      <div class="sen r"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="#fff" stroke-width="9"/><path d="M22 78L78 22" stroke="#fff" stroke-width="9"/><circle cx="50" cy="38" r="7" fill="#fff"/><path d="M34 66c0-10 7-16 16-16s16 6 16 16" fill="#fff"/></svg><div><h2>Sin datos personales</h2><p>Nunca nombres, documentos ni teléfonos.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="frame">
+  <div class="cab">Territorio Preparado<span class="c">Cali, CO ▾</span><nav><span>Inicio</span><span class="on">Entidades</span><span>Comunidad</span><span>Aliados</span></nav></div>
+  <div class="tab"><span class="on">Mapa de espacios</span><span>Simular</span><span>Refugio</span><span>Preparar</span><span>Orientación</span><span>Datos recibidos</span></div>
+  <div class="cuerpo"><div class="lista"><h2>1.970 espacios inventariados</h2>
+    <div class="fil"><div class="ic">1</div><div><b>Unidad Deportiva Jaime Aparicio</b><small>Comuna 17 · cancha y coliseo</small></div><span class="est">POR CONFIRMAR</span></div>
+    <div class="fil"><div class="ic">2</div><div><b>Coliseo Francisco Chois</b><small>Comuna 10 · 28 × 19 m ilustrativos</small></div><span class="est">POR MEDIR</span></div>
+    <div class="fil"><div class="ic">3</div><div><b>Parque del Perro</b><small>Comuna 2 · zona verde</small></div><span class="est ok">AUTORIZADO</span></div>
+    <div class="fil"><div class="ic">4</div><div><b>Salón comunal Azalea</b><small>Propuesto por la comunidad</small></div><span class="est">POR REVISAR</span></div>
+    <div class="fil"><div class="ic">5</div><div><b>Cancha barrio Siloé</b><small>Comuna 20 · amenaza media</small></div><span class="est">POR CONFIRMAR</span></div></div>
+    <div class="mapa"><div class="sim"><span>Sismo simulado · Mw 7,0</span><b>228.001</b><span>construcciones con daño importante</span></div><div class="leyenda"><span><i style="background:var(--verde)"></i>Espacio sugerido</span><span><i style="background:var(--amarillo)"></i>Por confirmar</span><span><i style="background:var(--rojo)"></i>Amenaza alta</span></div></div></div>
+</div>
+
+<div class="fila">
+  <div class="frame movil"><div class="cab"><span>Territorio Preparado</span></div><div class="cuerpo2"><h2>Reporte mensual</h2><div class="pasos"><span class="on">1</span><span>2</span><span>3</span></div><div class="pregunta">¿Qué quieres reportar este mes?</div>
+    <div class="btn2 a"><span>Cómo está un espacio<small>Salón, cancha, parqueadero</small></span>›</div><div class="btn2 z"><span>Lo que nos falta<small>Agua, colchonetas, otros</small></span>›</div><div class="btn2"><span>Algo que preocupa<small>Alerta del barrio</small></span>›</div>
+    <div class="prohi"><svg viewBox="0 0 100 100" width="64"><circle cx="50" cy="50" r="40" fill="none" stroke="#d4002a" stroke-width="10"/><path d="M22 78L78 22" stroke="#d4002a" stroke-width="10"/></svg><span><b>No escribas</b> nombres, cédulas ni teléfonos. Solo números.</span></div></div></div>
+  <div class="meta" style="max-width:520px;align-self:center"><b>Móvil</b>Una pregunta por pantalla, botones enormes con color de significado y el recordatorio de privacidad siempre a la vista con la señal de prohibido.</div>
+</div>
+</body></html>

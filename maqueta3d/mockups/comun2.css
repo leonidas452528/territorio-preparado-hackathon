@@ -1,0 +1,19 @@
+@font-face { font-family: "Fira"; font-weight: 400; src: url("fonts/FiraSans-Regular.otf"); }
+@font-face { font-family: "Fira"; font-weight: 500; src: url("fonts/FiraSans-Medium.otf"); }
+@font-face { font-family: "Fira"; font-weight: 700; src: url("fonts/FiraSans-Bold.otf"); }
+@font-face { font-family: "Fira"; font-weight: 800; src: url("fonts/FiraSans-ExtraBold.otf"); }
+@font-face { font-family: "FiraC"; font-weight: 700; src: url("fonts/FiraSansCondensed-Bold.otf"); }
+@font-face { font-family: "FiraC"; font-weight: 800; src: url("fonts/FiraSansCondensed-ExtraBold.otf"); }
+@font-face { font-family: "FiraC"; font-weight: 900; src: url("fonts/FiraSansCondensed-Heavy.otf"); }
+@font-face { font-family: "FiraMono"; src: url("fonts/FiraMono-Regular.otf"); }
+@font-face { font-family: "C059"; font-weight: 400; src: url("fonts/C059-Roman.otf"); }
+@font-face { font-family: "C059"; font-weight: 400; font-style: italic; src: url("fonts/C059-Italic.otf"); }
+@font-face { font-family: "C059"; font-weight: 700; src: url("fonts/C059-Bold.otf"); }
+* { box-sizing: border-box; margin: 0; }
+body { font-family: "Fira", sans-serif; background: #7b8187; padding: 32px; display: grid; gap: 40px; justify-items: center; }
+.meta { color: #fff; width: 100%; max-width: 1440px; font-size: 16px; line-height: 1.45; }
+.meta b { font: 800 24px "Fira"; display: block; margin-bottom: 4px; }
+.frame { position: relative; overflow: hidden; width: 1440px; height: 900px; box-shadow: 0 10px 40px #0006; }
+.movil { width: 390px; height: 844px; border-radius: 30px; flex: none; }
+.fila { display: flex; gap: 32px; align-items: start; justify-content: center; flex-wrap: wrap; }
+svg.arte { display: block; width: 100%; height: 100%; }

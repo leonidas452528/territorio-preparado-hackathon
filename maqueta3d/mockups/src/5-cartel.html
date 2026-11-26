@@ -1,0 +1,69 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>Propuesta 5: Cartel de barrio</title><meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="comun2.css">
+<style>
+:root { --papel: #f3f4fb; --azul: #2b3ae8; --rosa: #ff4f9a; --sol: #ffd01f; --tinta: #1a1f6b; }
+.frame { background: var(--papel); color: var(--azul); }
+.c { font-family: "FiraC", sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: -.01em; line-height: .88; }
+.mult { mix-blend-mode: multiply; }
+.nav { position: absolute; z-index: 6; left: 48px; right: 48px; top: 26px; display: flex; align-items: center; gap: 14px; }
+.nav .m { font: 900 30px/1 "FiraC"; text-transform: uppercase; margin-right: auto; }
+.nav a { font: 700 18px "Fira"; padding: 9px 18px; border: 2.5px solid var(--azul); border-radius: 99px; } .nav a.on { background: var(--azul); color: #fff; }
+.duo { position: absolute; overflow: hidden; background: var(--papel); } .duo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.35) brightness(1.1); display: block; } .duo::after { content: ""; position: absolute; inset: 0; background: var(--azul); mix-blend-mode: lighten; }
+.disco { position: absolute; border-radius: 50%; mix-blend-mode: multiply; } .arco { position: absolute; border-radius: 999px 999px 0 0; mix-blend-mode: multiply; }
+.hero h1 { position: absolute; z-index: 5; left: 48px; top: 118px; font-size: 112px; color: var(--azul); width: 740px; mix-blend-mode: multiply; }
+.hero .sub { position: absolute; z-index: 5; left: 52px; top: 470px; width: 620px; font: 500 24px/1.4 "Fira"; color: var(--tinta); }
+.boton { display: inline-block; position: absolute; z-index: 6; font: 900 30px/1 "FiraC"; text-transform: uppercase; padding: 20px 30px; background: var(--sol); color: var(--azul); border: 3px solid var(--azul); box-shadow: 8px 8px 0 var(--rosa); border-radius: 14px; }
+.boleta { position: absolute; z-index: 6; background: #fff; border: 3px solid var(--azul); border-radius: 14px; padding: 18px 20px; box-shadow: 6px 6px 0 var(--azul); }
+.paso { position: absolute; z-index: 6; width: 250px; background: #fff; border: 3px dashed var(--azul); border-radius: 14px; padding: 14px 16px; font: 500 18px/1.3 "Fira"; color: var(--tinta); } .paso b { display: block; font: 900 27px/1 "FiraC"; text-transform: uppercase; color: var(--azul); margin-bottom: 4px; }
+.pegatina { position: absolute; z-index: 7; background: var(--rosa); color: #fff; font: 900 26px/1 "FiraC"; text-transform: uppercase; padding: 14px 18px; border-radius: 50%; width: 150px; height: 150px; display: grid; place-items: center; text-align: center; transform: rotate(-12deg); border: 3px solid var(--azul); }
+/* formulario */
+.form { position: absolute; left: 48px; top: 100px; width: 780px; }
+.form h2 { font: 900 78px/.9 "FiraC"; text-transform: uppercase; margin-bottom: 26px; }
+.campo { background: #fff; border: 3px solid var(--azul); border-radius: 16px; padding: 14px 20px 16px; margin-bottom: 14px; } .campo label { font: 700 18px "Fira"; color: var(--tinta); display: block; } .campo .v { font: 900 60px/1 "FiraC"; } .campo small { font-size: 16px; color: #4a52b8; }
+.grupos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; } .grupos .campo { margin: 0; padding: 10px 14px; } .grupos .v { font-size: 44px; }
+.fichas { display: flex; gap: 10px; flex-wrap: wrap; } .fichas span { font: 700 19px "Fira"; padding: 9px 18px; border: 2.5px solid var(--azul); border-radius: 99px; background: #fff; } .fichas .on { background: var(--azul); color: #fff; }
+.error { background: #ffe3ef; border: 3px solid var(--rosa); border-radius: 14px; padding: 12px 16px; font: 700 18px/1.3 "Fira"; color: #a3004f; margin-bottom: 14px; }
+.tick { position: absolute; right: 56px; top: 110px; width: 420px; background: #fff; border: 3px solid var(--azul); border-radius: 12px; padding: 24px 26px 28px; box-shadow: 8px 8px 0 var(--sol); transform: rotate(1.6deg); }
+.tick h3 { font: 900 40px/.9 "FiraC"; text-transform: uppercase; } .tick .l { border-top: 3px dashed var(--azul); margin: 14px 0; } .tick .r { display: flex; justify-content: space-between; font: 500 18px "Fira"; padding: 5px 0; color: var(--tinta); } .tick .r b { font: 900 22px "FiraC"; }
+/* móvil */
+.mv { background: var(--papel); color: var(--azul); padding: 22px; position: relative; }
+.mv h3 { font: 900 56px/.88 "FiraC"; text-transform: uppercase; margin: 6px 0 14px; } .mv p { font: 500 19px/1.4 "Fira"; color: var(--tinta); margin-bottom: 14px; }
+.mv .boton { position: static; display: block; text-align: center; margin-top: 16px; }
+</style>
+<body>
+<!--DEFS-->
+<div class="meta"><b>Propuesta 5 · Cartel de barrio</b>La cara humana del producto, pensada para quien reporta en cualquier país: administradores de edificios, juntas de vecinos, comunidades, vecinos. Estética de cartel impreso a dos tintas (riso): azul, rosa y amarillo que se superponen, tipografía condensada gigante, formularios que parecen boletas. Es cercana y alegre, sin parecer un trámite, y deja claro qué se pregunta y qué no. El idioma se elige arriba (el cartel se reimprime en español, inglés o portugués) y las preguntas no dependen de la ley de un país. Para las entidades se propone un modo sobrio con la misma paleta.</div>
+
+<div class="frame hero">
+  <div class="disco" style="left:760px;top:-120px;width:760px;height:760px;background:var(--rosa)"></div>
+  <div class="arco" style="left:980px;top:300px;width:420px;height:600px;background:var(--sol)"></div>
+  <div class="duo" style="left:820px;top:140px;width:560px;height:520px;border-radius:24px;border:3px solid var(--azul)"><img src="assets/mapa.png" alt=""></div>
+  <div class="nav"><span class="m">Territorio Preparado</span><a class="on">Inicio</a><a>Entidades</a><a>Comunidad</a><a>Aliados</a><a style="border-style:dashed">ES · EN · PT</a></div>
+  <h1 class="c">¿Cómo está tu comunidad este mes?</h1>
+  <p class="sub">Cuéntanos en cinco minutos cuánta gente podría acoger tu salón, cancha o edificio y qué le falta. Solo números: nunca nombres, documentos ni teléfonos. Funciona igual en tu ciudad.</p>
+  <span class="boton" style="left:52px;top:700px">Enviar mi reporte</span><span class="boton" style="left:360px;top:700px;background:#fff;box-shadow:8px 8px 0 var(--azul)">Soy de una entidad</span>
+  <div class="pegatina" style="left:1230px;top:600px">Sin datos personales</div>
+  <div class="paso" style="left:810px;top:720px"><b>1 · Reportas</b>Una vez al mes, con un formulario o un CSV.</div><div class="paso" style="left:1080px;top:760px;width:240px"><b>2 · Verificamos</b>Te decimos qué corregir.</div>
+</div>
+
+<div class="frame">
+  <div class="disco" style="left:1000px;top:-200px;width:600px;height:600px;background:var(--sol)"></div><div class="disco" style="left:-160px;top:640px;width:420px;height:420px;background:var(--rosa)"></div>
+  <div class="nav"><span class="m">Territorio Preparado</span><a>Inicio</a><a>Entidades</a><a class="on">Comunidad</a><a>Aliados</a><a style="border-style:dashed">Español ▾</a></div>
+  <div class="form"><h2>Tu reporte de octubre</h2>
+    <div class="campo"><label>¿Cuántas personas podría alojar tu espacio?</label><div class="v">120</div></div>
+    <div class="grupos"><div class="campo"><label>0 a 5 años</label><div class="v">10</div></div><div class="campo"><label>6 a 17</label><div class="v">25</div></div><div class="campo"><label>18 a 59</label><div class="v">70</div></div><div class="campo"><label>60 o más</label><div class="v">18</div></div></div>
+    <div class="error">Los grupos suman 123 y el total es 120. Corrige uno de los dos y seguimos.</div>
+    <div class="fichas" style="margin-bottom:18px"><span class="on">Salón comunitario</span><span>Parqueadero</span><span>Cancha</span><span>Otro</span></div>
+    <div class="campo"><label>¿Algo más que debamos saber? (opcional)</label><div class="v" style="font:500 26px 'Fira'">Faltan colchonetas y agua para 40 personas.</div><small>Máximo 280 caracteres. Sin nombres, correos ni teléfonos.</small></div>
+    <div style="display:flex;gap:14px;margin-top:18px"><span class="boton" style="position:static">Revisar mi reporte</span><span class="boton" style="position:static;background:#fff;box-shadow:8px 8px 0 var(--azul)">Guardar y seguir después</span></div></div>
+  <div class="tick"><h3>Tu boleta</h3><div class="r" style="margin-top:8px"><span>Comunidad</span><b>Azalea · Cali</b></div><div class="l"></div><div class="r"><span>Personas</span><b>120</b></div><div class="r"><span>Menores de 18</span><b>35</b></div><div class="r"><span>Adultos mayores</span><b>18</b></div><div class="l"></div><div class="r"><span>Estado</span><b style="color:var(--rosa)">Falta corregir</b></div><p style="font:500 15px/1.35 Fira;color:var(--tinta);margin-top:12px">Se guarda en tu navegador hasta que descargues el CSV. En esta demostración no se envía nada.</p></div>
+</div>
+
+<div class="fila">
+  <div class="frame movil mv"><div class="disco" style="left:150px;top:-90px;width:330px;height:330px;background:var(--rosa)"></div><div style="position:relative;z-index:2;padding-top:40px"><span style="font:900 22px 'FiraC';text-transform:uppercase">Territorio Preparado</span><h3>¡Listo, gracias!</h3><p>Tu reporte de octubre quedó revisado y sin errores. Descárgalo y entrégalo a la entidad que te dio tu código.</p>
+    <div class="boleta" style="position:relative;left:0;right:auto"><div style="font:900 30px/1 FiraC;text-transform:uppercase">Comunidad Azalea</div><div style="font:500 17px Fira;color:var(--tinta);margin-top:6px">120 personas · 35 menores · 18 mayores</div></div><span class="boton">Descargar mi CSV</span><span class="boton" style="background:#fff;box-shadow:8px 8px 0 var(--azul);margin-top:20px">Reportar otro espacio</span></div></div>
+  <div class="frame movil mv" style="background:#fff7d6"><div style="padding-top:40px"><span style="font:900 22px 'FiraC';text-transform:uppercase">Territorio Preparado</span><h3 style="color:#a3004f">Esta fila no pasa</h3><p>Escribiste algo que parece un teléfono en la observación. Por tu seguridad y la de tus vecinos, quítalo y vuelve a intentar.</p>
+    <div class="error" style="background:#fff;margin-top:6px">Observación: «llamar 300 123 4567»</div><div class="campo" style="margin-top:14px"><label>Observación (opcional)</label><div class="v" style="font:500 22px 'Fira'">Faltan colchonetas y agua</div><small>Máximo 280 caracteres. Sin nombres ni teléfonos.</small></div><span class="boton">Corregir y seguir</span></div></div>
+  <div class="meta" style="max-width:420px;align-self:center"><b>Móvil</b>Los dos momentos que más importan: la confirmación y el error. Los mensajes hablan de tú a tú, dicen qué pasó y cómo arreglarlo, y no culpan a quien reporta.</div>
+</div>
+</body></html>

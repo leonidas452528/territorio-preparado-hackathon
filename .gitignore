@@ -1,0 +1,43 @@
+# Maqueta 3D: datos pesados, se regeneran con bajar.sh y ciudad3d.py
+prototipo/datos/raw/ciudad3d/*.json
+prototipo/datos/raw/ciudad3d/terreno/
+prototipo/datos/raw/ciudad3d/*.log
+prototipo/datos/procesados/ciudad3d/
+prototipo/datos/raw/ciudad3d/edificios/
+prototipo/datos/raw/ciudad3d/direcciones/
+entregables/simulacion-ciudad/simulacion_ciudad_cali.html
+entregables/simulacion-ciudad/*.zip
+entregables/simulacion-ciudad/FUENTES_Y_METODO.md
+# dependencias y builds
+node_modules/
+dist/
+build/
+.next/
+__pycache__/
+*.pyc
+venv/
+.venv/
+env/
+bin/
+obj/
+.vs/
+# secretos y datos locales
+.env
+.env.*
+!.env.example
+*.db
+*.sqlite3
+credentials*.json
+token.json
+instance/
+logs/
+*.log
+# modelos pesados
+*.pt
+*.pth
+*.h5
+*.onnx
+# sistema
+.DS_Store
+Thumbs.db
+.~lock*

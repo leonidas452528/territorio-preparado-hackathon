@@ -1,0 +1,63 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>Propuesta 3: Sala de situación</title><meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="comun.css">
+<style>
+:root { --fondo: #0e1a21; --panel: #15252e; --linea: #27404d; --texto: #e6eef2; --tenue: #8fa5b1; --seguro: #3fb7a0; --alerta: #f2b134; --peligro: #e4572e; }
+.oscuro { background: var(--fondo); color: var(--texto); }
+.top { height: 60px; display: flex; align-items: center; gap: 22px; padding: 0 24px; border-bottom: 1px solid var(--linea); }
+.top .m { font: 800 19px Manrope; display: flex; gap: 10px; align-items: center; } .top .s { width: 30px; height: 30px; background: var(--seguro); color: var(--fondo); border-radius: 7px; display: grid; place-items: center; font: 800 13px Manrope; }
+.top .c { border: 1px solid var(--linea); border-radius: 8px; padding: 7px 12px; color: var(--tenue); font-size: 15px; } .top nav { margin-left: auto; display: flex; gap: 6px; } .top nav span { padding: 8px 14px; border-radius: 8px; color: var(--tenue); font-weight: 600; } .top nav .on { background: var(--panel); color: var(--texto); box-shadow: inset 0 -3px 0 var(--seguro); }
+/* home */
+.h { display: grid; grid-template-columns: 1fr 560px; gap: 56px; padding: 56px 56px 0; height: calc(100% - 60px); }
+.h h1 { font: 800 66px/1.02 Manrope; letter-spacing: -.04em; margin-bottom: 22px; } .h p { font-size: 20px; line-height: 1.5; color: var(--tenue); max-width: 620px; margin-bottom: 30px; }
+.puertas { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 640px; } .puertas div { border: 1px solid var(--linea); background: var(--panel); border-radius: 14px; padding: 20px; } .puertas b { font: 800 20px Manrope; display: block; margin-bottom: 6px; } .puertas span { color: var(--tenue); font-size: 15px; } .puertas .p { background: var(--seguro); color: var(--fondo); border-color: var(--seguro); } .puertas .p span { color: #0e3d33; }
+.ciudades { background: var(--panel); border: 1px solid var(--linea); border-radius: 16px; padding: 22px; align-self: start; margin-top: 8px; }
+.ciudades h3 { font: 800 18px Manrope; margin-bottom: 4px; } .ciudades small { color: var(--tenue); font-size: 14px; display: block; margin-bottom: 14px; }
+.cd { display: grid; grid-template-columns: 1fr 150px 90px; gap: 14px; align-items: center; padding: 14px 0; border-top: 1px solid var(--linea); } .cd b { font: 700 18px "DM Sans"; display: block; } .cd em { font-style: normal; color: var(--tenue); font-size: 14px; }
+.niv { display: flex; gap: 5px; } .niv i { flex: 1; height: 10px; border-radius: 3px; background: var(--linea); } .niv i.on { background: var(--seguro); } .estado { font-size: 13px; font-weight: 700; padding: 4px 8px; border-radius: 6px; text-align: center; } .estado.p { background: #1d4a41; color: var(--seguro); } .estado.q { background: #4a3b16; color: var(--alerta); }
+.foto { margin-top: 18px; height: 190px; border-radius: 12px; background: url(assets/sismo.png) center/cover; border: 1px solid var(--linea); position: relative; } .foto span { position: absolute; left: 12px; bottom: 12px; background: #0e1a21e6; padding: 6px 10px; border-radius: 8px; font-size: 13px; }
+/* tablero */
+.t { display: grid; grid-template-columns: 1fr 380px; grid-template-rows: auto 1fr; gap: 14px; padding: 14px; height: calc(100% - 60px); }
+.kpis { grid-column: 1 / 3; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; } .kpi { background: var(--panel); border: 1px solid var(--linea); border-radius: 12px; padding: 14px 18px; } .kpi small { color: var(--tenue); font-size: 14px; } .kpi b { display: block; font: 800 38px/1.1 Manrope; letter-spacing: -.02em; } .kpi i { font-style: normal; font-size: 13px; color: var(--seguro); font-weight: 700; } .kpi.w b { color: var(--alerta); } .kpi.d b { color: var(--peligro); }
+.centro { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--linea); background: url(assets/sismo.png) center/cover; } .centro .bar { position: absolute; left: 14px; top: 14px; display: flex; gap: 6px; } .centro .bar span { background: #0e1a21e6; border: 1px solid var(--linea); border-radius: 8px; padding: 8px 12px; font-weight: 600; font-size: 14px; } .centro .bar .on { background: var(--seguro); color: var(--fondo); border-color: var(--seguro); }
+.lado { display: grid; grid-template-rows: auto 1fr; gap: 14px; min-height: 0; } .caja { background: var(--panel); border: 1px solid var(--linea); border-radius: 12px; padding: 16px; } .caja h4 { font: 800 16px Manrope; margin-bottom: 10px; display: flex; justify-content: space-between; } .caja h4 small { font: 500 13px "DM Sans"; color: var(--tenue); }
+.rep { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; padding: 9px 0; border-top: 1px solid var(--linea); font-size: 14px; } .rep b { font-weight: 700; } .rep small { color: var(--tenue); grid-column: 1; } .ok, .rv, .er { font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; align-self: center; grid-row: 1 / 3; grid-column: 2; } .ok { background: #1d4a41; color: var(--seguro); } .rv { background: #4a3b16; color: var(--alerta); } .er { background: #4d2315; color: var(--peligro); }
+.csv { display: grid; grid-template-columns: 1fr 70px 80px; gap: 6px; font-size: 13px; padding: 5px 0; color: var(--tenue); } .csv b { color: var(--texto); font-weight: 600; }
+/* móvil claro */
+.claro { background: #f4f7f8; color: #10222b; } .claro .top { background: #fff; border-color: #dbe4e8; height: 56px; padding: 0 16px; } .claro .top .m { font-size: 17px; }
+.cm { padding: 20px 18px; } .cm h2 { font: 800 28px/1.1 Manrope; letter-spacing: -.03em; margin-bottom: 6px; } .cm p { color: #51646f; font-size: 16px; line-height: 1.4; margin-bottom: 16px; }
+.avance { background: #fff; border: 1px solid #dbe4e8; border-radius: 16px; padding: 16px; margin-bottom: 12px; } .avance .bar { height: 10px; background: #dbe4e8; border-radius: 9px; margin: 10px 0 6px; } .avance .bar i { display: block; width: 60%; height: 100%; background: #1c8f77; border-radius: 9px; } .avance b { font: 800 18px Manrope; }
+.item { background: #fff; border: 1px solid #dbe4e8; border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; } .item b { display: block; font-size: 17px; } .item small { color: #51646f; font-size: 14px; } .tic { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; background: #d8f0ea; color: #1c8f77; } .tic.pen { background: #fdebc6; color: #8a6200; }
+.cta { display: block; text-align: center; background: #1c8f77; color: #fff; border-radius: 14px; padding: 17px; font: 800 18px Manrope; margin-top: 14px; }
+</style>
+<body>
+<div class="meta"><b>Propuesta 3 · Sala de situación</b>Dos caras para dos públicos. Las entidades trabajan en un tablero oscuro y denso (menos deslumbramiento en turnos largos): mapa al centro, cifras arriba, reportes y salud de los datos a un lado. La comunidad ve una app clara, simple y amable. El inicio muestra la escala: cada ciudad con su nivel de detalle.</div>
+
+<div class="frame oscuro">
+  <div class="top"><div class="m"><span class="s">TP</span>Territorio Preparado</div><span class="c">Todas las ciudades ▾</span><nav><span class="on">Inicio</span><span>Entidades</span><span>Comunidad</span><span>Aliados</span></nav></div>
+  <div class="h"><div><h1>Un solo tablero para decidir dónde acoger ayuda.</h1><p>Espacios, amenazas y reportes mensuales de la comunidad, ciudad por ciudad. Empieza con un mapa y un archivo CSV; sube de nivel cuando haya datos.</p>
+    <div class="puertas"><div class="p"><b>Entrar como entidad</b><span>Tablero, simulaciones y datos recibidos.</span></div><div><b>Aportar datos</b><span>Reporte mensual de tu conjunto o JAC.</span></div></div></div>
+    <div class="ciudades"><h3>Ciudades</h3><small>Cada una declara cuánto detalle tiene.</small>
+      <div class="cd"><div><b>Cali, Colombia</b><em>Mapa · edificios · maqueta</em></div><div class="niv"><i class="on"></i><i class="on"></i><i class="on"></i></div><span class="estado p">Piloto</span></div>
+      <div class="cd"><div><b>Barcelona, España</b><em>Solo mapa por ahora</em></div><div class="niv"><i class="on"></i><i></i><i></i></div><span class="estado q">Propuesta</span></div>
+      <div class="cd"><div><b>Tu ciudad</b><em>Empieza con un CSV de espacios</em></div><div class="niv"><i></i><i></i><i></i></div><span class="estado q">+ Agregar</span></div>
+      <div class="foto"><span>Cali · sismo Mw 7,0 (escenario ilustrativo)</span></div></div></div>
+</div>
+
+<div class="frame oscuro">
+  <div class="top"><div class="m"><span class="s">TP</span>Entidades</div><span class="c">Cali, CO ▾</span><nav><span>Mapa</span><span class="on">Simular</span><span>Refugio</span><span>Preparar</span><span>Datos recibidos</span></nav></div>
+  <div class="t"><div class="kpis"><div class="kpi"><small>Construcciones analizadas</small><b>693.468</b><i>14.179 manzanas</i></div><div class="kpi d"><small>Daño importante o mayor</small><b>228.001</b><i style="color:var(--peligro)">Mw 7,0 · 15 km</i></div><div class="kpi w"><small>Espacios por confirmar</small><b>1.970</b><i style="color:var(--alerta)">0 verificados</i></div><div class="kpi"><small>Reportes de octubre</small><b>12 / 18</b><i>organizaciones al día</i></div></div>
+    <div class="centro"><div class="bar"><span>Inundación</span><span class="on">Sismo</span><span>Incendio</span><span>Mw 7,0</span><span>15 km</span><span>Bajo el centro</span></div></div>
+    <div class="lado"><div class="caja"><h4>Reportes recibidos <small>octubre 2026</small></h4>
+      <div class="rep"><b>Conjunto Azalea</b><small>120 personas · estado de espacio</small><span class="ok">Válido</span></div><div class="rep"><b>JAC Comuna 3</b><small>Necesidad: agua y colchonetas</small><span class="ok">Válido</span></div><div class="rep"><b>Conjunto El Lago</b><small>Los grupos de edad no suman</small><span class="er">Error</span></div><div class="rep"><b>Caja de compensación</b><small>Espacio propuesto · pendiente</small><span class="rv">Revisar</span></div></div>
+      <div class="caja"><h4>Salud de los datos <small>carpeta bd/</small></h4><div class="csv"><b>ciudades.csv</b><span>2 filas</span><span>hoy</span></div><div class="csv"><b>organizaciones.csv</b><span>18 filas</span><span>hoy</span></div><div class="csv"><b>espacios_propuestos.csv</b><span>7 filas</span><span>ayer</span></div><div class="csv"><b>reportes.csv</b><span>12 filas</span><span>hoy</span></div></div></div></div>
+</div>
+
+<div class="fila">
+  <div class="frame movil claro"><div class="top"><div class="m"><span class="s" style="background:#1c8f77;color:#fff">TP</span>Territorio Preparado</div></div>
+    <div class="cm"><h2>Tu reporte de octubre</h2><p>Conjunto Azalea · Cali. Solo números, nunca nombres.</p>
+      <div class="avance"><b>3 de 5 listos</b><div class="bar"><i></i></div><small style="color:#51646f">Faltan dos y cierra el 31 de octubre.</small></div>
+      <div class="item"><span><b>Personas que podrías alojar</b><small>120 en total</small></span><span class="tic">✓</span></div><div class="item"><span><b>Estado del salón comunal</b><small>Con baño y agua</small></span><span class="tic">✓</span></div><div class="item"><span><b>Lo que falta</b><small>Colchonetas, agua</small></span><span class="tic">✓</span></div><div class="item"><span><b>Animales de compañía</b><small>Pendiente</small></span><span class="tic pen">!</span></div><div class="item"><span><b>Observación</b><small>Opcional</small></span><span class="tic pen">!</span></div>
+      <span class="cta">Revisar y enviar</span></div></div>
+  <div class="meta" style="max-width:520px;align-self:center"><b>Móvil (comunidad)</b>La cara clara y amable: una lista de lo que falta por responder con avance, marcas verdes y un solo botón. Quien reporta ve de un vistazo si cumplió.</div>
+</div>
+</body></html>

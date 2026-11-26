@@ -1,0 +1,93 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>Propuesta 4: Isolíneas</title><meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="comun2.css">
+<style>
+:root { --tinta: #12263a; --niebla: #eef2f4; --curva: #8aa5ba; --verde: #1e7a50; --berm: #e2452b; --suave: #5a6f82; }
+.f { stroke: var(--curva); stroke-width: .35; fill: none; stroke-linecap: round; } .g { stroke: var(--tinta); stroke-width: .75; fill: none; stroke-linecap: round; opacity: var(--og, 1); }
+.h0 { fill: var(--m0); } .h1 { fill: var(--m1); } .h2 { fill: var(--m2); } .h3 { fill: var(--m3); }
+.frame { background: var(--niebla); color: var(--tinta); }
+.serif { font-family: "C059", Georgia, serif; }
+.nav { position: absolute; z-index: 5; left: 56px; right: 56px; top: 28px; display: flex; align-items: baseline; gap: 36px; }
+.nav .m { font: italic 400 28px "C059"; margin-right: auto; } .nav a { font-size: 17px; font-weight: 500; color: var(--tinta); } .nav a.on { border-bottom: 2px solid var(--berm); padding-bottom: 3px; }
+.nav .ciudad { font-size: 15px; border: 1px solid var(--tinta); padding: 6px 12px; }
+.arte-hero { position: absolute; right: -80px; top: 0; width: 1010px; aspect-ratio: 203/193; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 42%); mask-image: linear-gradient(90deg, transparent 0, #000 42%); --m0: #b4c4d0; --m1: #7d98ad; --m2: #34506a; --m3: #e2452b; --og: .7; }
+.arte-hero > svg, .mapa-caja > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.manz { position: absolute; left: 10.1%; top: 0; width: 79.8%; height: 101.2%; }
+.titular { position: absolute; z-index: 4; left: 56px; top: 124px; width: 640px; }
+.titular h1 { font: 400 92px/.96 "C059"; letter-spacing: -.025em; } .titular h1 i { color: var(--berm); }
+.titular p { font-size: 21px; line-height: 1.45; margin: 22px 0 28px; max-width: 560px; color: #26405a; }
+.b { display: inline-block; padding: 17px 28px; font: 700 18px "Fira"; border: 2px solid var(--tinta); margin-right: 12px; } .b.p { background: var(--tinta); color: #fff; }
+.aqui { position: absolute; z-index: 4; left: 1106px; top: 459px; }
+.aqui i { position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; background: var(--berm); box-shadow: 0 0 0 6px #e2452b33; }
+.aqui div { position: absolute; left: 24px; top: -20px; width: 250px; background: #fff; border-left: 4px solid var(--berm); padding: 10px 14px; font-size: 15px; line-height: 1.35; } .aqui b { display: block; font: 700 17px "Fira"; }
+.cifras { position: absolute; z-index: 4; left: 56px; bottom: 30px; display: flex; gap: 52px; }
+.cifras div { border-top: 3px solid var(--tinta); padding-top: 10px; width: 190px; } .cifras b { font: 400 54px/1 "C059"; display: block; } .cifras span { font-size: 15px; color: var(--suave); }
+.escala { position: absolute; right: 56px; bottom: 40px; z-index: 4; font-size: 13px; line-height: 1.5; color: var(--tinta); text-align: right; } .escala i { display: block; width: 160px; height: 8px; border: 2px solid var(--tinta); border-top: 0; margin: 4px 0 4px auto; }
+/* láminas */
+.lam { padding: 72px 56px; } .lam h2 { font: 400 70px/1 "C059"; letter-spacing: -.02em; max-width: 960px; } .lam .sub { font-size: 21px; line-height: 1.5; max-width: 700px; margin: 22px 0 44px; color: #26405a; }
+.placas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+.placa .fig { height: 330px; position: relative; overflow: hidden; background: #fff; border: 1px solid var(--tinta); }
+.placa figcaption { display: grid; gap: 4px; padding-top: 14px; } .placa .n { font: italic 400 20px "C059"; color: var(--berm); } .placa b { font: 700 24px "Fira"; } .placa p { font-size: 17px; line-height: 1.45; color: #26405a; } .placa .hoy { font-weight: 700; color: var(--verde); font-size: 16px; }
+.fig img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fig.dots { --m0: #9fb4c4; --m1: #5f7f98; --m2: #26415a; --m3: #e2452b; padding: 18px; } .fig.dots svg { width: 100%; height: 100%; }
+.fig.mapa img { filter: grayscale(.4) contrast(1.05); }
+/* ficha */
+.cuerpo { display: grid; grid-template-columns: 220px 1fr 440px; height: 100%; }
+.rail { padding: 28px 24px; border-right: 1px solid var(--tinta); font-size: 18px; } .rail .m { font: italic 400 24px "C059"; margin-bottom: 36px; display: block; } .rail a { display: block; padding: 10px 0; color: var(--suave); } .rail a.on { color: var(--tinta); font-weight: 700; border-left: 4px solid var(--berm); padding-left: 12px; margin-left: -16px; } .rail h6 { font: 700 13px "Fira"; color: var(--suave); margin: 22px 0 4px; }
+.lienzo { position: relative; background: #fff; overflow: hidden; --m0: #b4c4d0; --m1: #7d98ad; --m2: #34506a; --m3: #e2452b; }
+.mapa-caja { position: absolute; top: 0; height: 100%; aspect-ratio: 203/193; left: -169px; --og: .6; }
+.pin { position: absolute; width: 30px; height: 30px; border-radius: 50%; background: var(--verde); color: #fff; border: 3px solid #fff; display: grid; place-items: center; font: 800 14px "Fira"; box-shadow: 0 2px 8px #0005; }
+.norte { position: absolute; right: 24px; top: 24px; font: italic 400 22px "C059"; text-align: center; line-height: 1; } .norte i { display: block; width: 0; height: 0; border: 9px solid transparent; border-bottom: 26px solid var(--tinta); border-top: 0; margin: 0 auto 4px; }
+.lienzo .escala { left: 24px; bottom: 24px; right: auto; text-align: left; } .lienzo .escala i { margin-left: 0; }
+.lado { padding: 32px 36px; border-left: 1px solid var(--tinta); display: grid; align-content: start; gap: 18px; overflow: hidden; }
+.lado h2 { font: 400 78px/.95 "C059"; letter-spacing: -.02em; } .lado .co { font-size: 15px; color: var(--suave); margin-top: -8px; }
+.niv { display: flex; gap: 6px; align-items: center; font-weight: 700; font-size: 16px; } .niv i { width: 44px; height: 8px; background: var(--tinta); } .niv i.off { background: #c7d3dc; }
+table { border-collapse: collapse; width: 100%; font-size: 16px; } td, th { text-align: left; padding: 8px 0; border-top: 1px solid #b9c7d2; font-weight: 400; } td:last-child { text-align: right; font-weight: 700; }
+.vacio { border: 2px dashed var(--curva); padding: 18px; font-size: 16px; line-height: 1.45; background: #f7f9fa; } .vacio b { font: 400 26px "C059"; display: block; margin-bottom: 4px; }
+.sim { display: block; text-align: center; background: var(--berm); color: #fff; font: 700 19px "Fira"; padding: 18px; }
+/* móvil */
+.m1 { background: var(--niebla); } .m1 .cab { position: relative; height: 250px; background: #fff; border-bottom: 1px solid var(--tinta); overflow: hidden; } .m1 .cab svg { width: 100%; height: 100%; } .m1 .cab .marca { position: absolute; left: 50%; top: 52%; width: 22px; height: 22px; margin: -11px; border-radius: 50%; background: var(--berm); box-shadow: 0 0 0 8px #e2452b33; }
+.m1 .tx { padding: 22px 22px 0; } .m1 h3 { font: 400 40px/1 "C059"; letter-spacing: -.02em; margin: 4px 0 6px; } .m1 .co { font-size: 15px; color: var(--suave); }
+.linea { margin: 24px 0 6px; border-left: 2px solid var(--tinta); padding-left: 20px; display: grid; gap: 20px; } .linea div { position: relative; font-size: 17px; line-height: 1.3; } .linea div::before { content: ""; position: absolute; left: -29px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--niebla); border: 2px solid var(--tinta); } .linea .ok::before { background: var(--verde); border-color: var(--verde); } .linea .ahora::before { background: var(--berm); border-color: var(--berm); } .linea small { display: block; color: var(--suave); font-size: 14px; }
+.m1 .b { display: block; text-align: center; margin: 22px 22px 0; padding: 18px; }
+</style>
+<body>
+<!--DEFS-->
+<div class="meta"><b>Propuesta 4 · Isolíneas</b>Un atlas del mundo, una lámina por ciudad. La imagen que firma el producto sale de datos reales (aquí, las curvas de nivel y las 14.179 manzanas de Cali, como ejemplo), y cada ciudad nueva genera su propia lámina con el mismo método. Pensada para escalar: selector de ciudad y de idioma siempre visibles, nivel de detalle por ciudad y marco legal configurable por país. Serif editorial, un solo color de alerta (bermellón), voz sobria y de confianza.</div>
+
+<div class="frame">
+  <div class="arte-hero"><svg viewBox="0 0 203 193"><use href="#iso"/></svg><svg class="manz" viewBox="0 0 1960 2362"><use href="#man"/></svg></div>
+  <div class="nav"><span class="m">Territorio Preparado</span><a class="on">Inicio</a><a>Entidades</a><a>Comunidad</a><a>Aliados</a><span class="ciudad">ES ▾</span><span class="ciudad">Cali, Colombia ▾</span></div>
+  <div class="titular"><h1>Leer el territorio antes de que se <i>mueva</i>.</h1><p>Dónde hay espacio, qué amenazas rodean a cada barrio y qué reporta su comunidad cada mes, en cualquier ciudad del mundo. Para que quien decide llegue con un plan.</p><span class="b p">Entrar como entidad</span><span class="b">Aportar datos de mi comunidad</span></div>
+  <div class="aqui"><i></i><div><b>Ejemplo: Cali, ciudad piloto</b>Cada curva es un desnivel de 50 m. Tu ciudad tendrá su propia lámina.</div></div>
+  <div class="cifras"><div><b>2</b><span>ciudades en el catálogo</span></div><div><b>3</b><span>niveles de detalle por ciudad</span></div><div><b>1</b><span>archivo CSV basta para empezar</span></div></div>
+  <div class="escala">Relieve de 932 a 3.120 m<i></i>Datos: curvas IDESC y SRTM</div>
+</div>
+
+<div class="frame">
+  <div class="nav"><span class="m">Territorio Preparado</span><a>Inicio</a><a>Entidades</a><a>Comunidad</a><a>Aliados</a><span class="ciudad">Cali, Colombia ▾</span></div>
+  <div class="lam" style="padding-top:110px"><h2>Una ciudad no necesita maqueta para empezar.</h2><p class="sub">Modelar cada rincón del mundo en 3D no es realista. Cada ciudad se presenta como una lámina con el nivel de detalle que sus datos permiten, y sube de nivel cuando los tiene.</p>
+    <div class="placas">
+      <figure class="placa"><div class="fig mapa"><img src="assets/mapa.png" alt=""></div><figcaption><span class="n">Lámina I</span><b>Mapa</b><p>Límites, espacios y reportes de la comunidad. Funciona con solo archivos CSV.</p><span class="hoy">Donde empieza toda ciudad nueva</span></figcaption></figure>
+      <figure class="placa"><div class="fig dots"><svg viewBox="450 350 1250 1500" preserveAspectRatio="xMidYMid meet"><use href="#man"/></svg></div><figcaption><span class="n">Lámina II</span><b>Edificios</b><p>3D automático con huellas de edificios abiertas y relieve público, sin curaduría manual.</p><span class="hoy">Siguiente paso, aún sin construir</span></figcaption></figure>
+      <figure class="placa"><div class="fig"><img src="assets/sismo.png" alt=""></div><figcaption><span class="n">Lámina III</span><b>Maqueta</b><p>3D curado con las amenazas oficiales del lugar, simulaciones y sitios de acopio.</p><span class="hoy">Hoy solo en la ciudad piloto</span></figcaption></figure>
+    </div></div>
+</div>
+
+<div class="frame"><div class="cuerpo">
+  <div class="rail"><span class="m">Territorio Preparado</span><h6>Ciudad</h6><a>Cali ▾</a><h6>Conocer</h6><a>Mapa de espacios</a><h6>Simular y preparar</h6><a class="on">Ficha de ciudad</a><a>Simular una amenaza</a><a>Refugio</a><a>Preparar un espacio</a><h6>Datos</h6><a>Datos recibidos</a><a>Guía de datos</a></div>
+  <div class="lienzo"><div class="mapa-caja"><svg viewBox="0 0 203 193"><use href="#iso"/></svg><svg class="manz" viewBox="0 0 1960 2362"><use href="#man"/></svg>
+    <div class="pin" style="left:59%;top:46%">1</div><div class="pin" style="left:62%;top:51%">2</div><div class="pin" style="left:56%;top:50%">3</div></div>
+    <div class="norte"><i></i>N</div><div class="escala">5 km<i></i>Escala gráfica</div></div>
+  <div class="lado"><div style="display:flex;gap:8px;flex-wrap:wrap;font-weight:700;font-size:16px"><span style="border-bottom:3px solid var(--berm);padding-bottom:2px">Cali</span><span style="color:var(--suave)">Barcelona</span><span style="color:var(--suave)">+ Agregar ciudad</span></div><h2>Cali</h2><div class="co">3,45° N · 76,53° O · Colombia</div>
+    <div class="niv"><i></i><i></i><i></i>&nbsp;Nivel maqueta · piloto</div>
+    <table><tr><td>Espacios inventariados</td><td>1.970</td></tr><tr><td>Manzanas modeladas</td><td>14.179</td></tr><tr><td>Reportes de octubre</td><td>12 de 18</td></tr><tr><td>Espacios por confirmar</td><td>1.970</td></tr><tr><td>Marco legal local</td><td>Colombia</td></tr><tr><td>Idioma</td><td>Español</td></tr></table>
+    <a class="sim">Simular una amenaza</a>
+    <div class="vacio"><b>Barcelona, España</b>Nivel mapa, sin datos todavía. Descarga la plantilla de espacios, llénala con la comunidad y súbela para ver la ciudad aquí.</div></div>
+</div></div>
+
+<div class="fila"><div class="frame movil m1"><div class="cab"><svg viewBox="70 55 100 80" preserveAspectRatio="xMidYMid slice" style="--og:.7"><use href="#iso"/></svg><span class="marca"></span></div>
+  <div class="tx"><span class="co">Cali · Comuna 17</span><h3>Salón comunal Azalea</h3><span class="co">Propuesto por la comunidad · 3,3942° N, 76,5426° O</span>
+    <div class="linea"><div class="ok">Propuesto<small>12 de octubre</small></div><div class="ahora">En revisión por la entidad<small>Falta la autorización del propietario</small></div><div>Autorizado<small>Aún no</small></div></div></div>
+  <span class="b p">Subir autorización</span></div>
+  <div class="meta" style="max-width:560px;align-self:center"><b>Móvil</b>Cada espacio es una ficha con su ubicación y una línea de tiempo honesta: propuesto, en revisión, autorizado. Se ve en qué punto está y qué falta.</div></div>
+</body></html>

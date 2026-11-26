@@ -1,0 +1,2 @@
+espacio_id,ciudad_id,nombre_publico,tipo_espacio,lat,lon,area_m2,cubierto,propietario,autorizacion,observacion
+demo-salon-01,cali-co,Salón comunal de ejemplo,salon_comunal,3.3942,-76.5426,180,1,privado,pendiente,Fila de ejemplo: no es un espacio real.

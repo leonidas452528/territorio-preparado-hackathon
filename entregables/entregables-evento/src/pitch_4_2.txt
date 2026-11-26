@@ -1,0 +1,8 @@
+[00:00 - 00:12] LA SOLUCIÓN
+"Nuestra solución es Territorio Preparado, una aplicación web que ayuda a la Secretaría de Gestión del Riesgo a preparar los espacios públicos de Cali para cada tipo de emergencia."
+
+[00:12 - 00:47] DEMOSTRACIÓN FUNCIONAL (CÓMO OPERA)
+"Funciona en tres pasos. Primero, la Secretaría elige la amenaza, por ejemplo una creciente del río Cauca, y cuántas personas hay que atender. Segundo, el sistema cruza 1.970 espacios públicos con las amenazas del POT, descarta los expuestos y propone candidatos con cada criterio a la vista. Tercero, calcula cuánto cabe sin sobreocupar, cuánta agua y cuántos baños faltan y qué entidad responde por cada servicio, y entrega un borrador para que la autoridad decida."
+
+[00:47 - 01:00] IMPACTO Y CIERRE
+"Tras el sismo, 1.046 personas se refugiaron en canchas a entre 72 y 152 metros del dique del Cauca. Que la próxima vez el parque esté listo antes. Territorio Preparado propone; la autoridad decide."

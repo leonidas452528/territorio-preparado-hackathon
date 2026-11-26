@@ -1,0 +1,10 @@
+# Despliegue estático en Netlify (la configuración vive en la raíz del repositorio).
+# Las cabeceras de seguridad (CSP, HSTS...) están en maqueta3d/public/_headers y se copian a dist/.
+[build]
+  base = "maqueta3d"
+  command = "npm ci --ignore-scripts && npm run scan:secrets && npm test && npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24.22.1"
+  NPM_FLAGS = "--ignore-scripts"

@@ -1,0 +1,79 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>Propuesta 6: Cajetín</title><meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="comun2.css">
+<style>
+:root { --papel: #fbfbfa; --g: #1c2024; --rej: #dcdfe2; --verde: #0a7f4f; --rojo: #d7261e; --tenue: #636b73; --amb: #f0b400; }
+.f { stroke: #9aa3ab; stroke-width: .3; fill: none; } .g { stroke: #6b747c; stroke-width: .6; fill: none; opacity: .8; }
+.h0 { fill: #c3c8cc; } .h1 { fill: #8a9299; } .h2 { fill: #4a525a; } .h3 { fill: #1c2024; }
+.frame { background: var(--papel); color: var(--g); }
+.mono { font-family: "FiraMono", monospace; }
+.hoja { position: absolute; inset: 14px; border: 2px solid var(--g); display: grid; grid-template-rows: 1fr 104px; }
+.reglaT, .reglaL { position: absolute; font: 12px "FiraMono"; color: var(--tenue); display: flex; justify-content: space-around; } .reglaT { left: 14px; right: 14px; top: 0; height: 14px; } .reglaL { top: 14px; bottom: 14px; left: 0; width: 14px; flex-direction: column; align-items: center; }
+.cuerpo { display: grid; grid-template-columns: 270px 1fr 350px; min-height: 0; }
+.capas { border-right: 2px solid var(--g); padding: 18px 18px; overflow: hidden; } .capas h4, .insp h4 { font: 700 13px "Fira"; color: var(--tenue); margin: 16px 0 8px; } .capas h4:first-child { margin-top: 0; }
+.capas .m { font: 800 22px "Fira"; letter-spacing: -.01em; display: block; margin-bottom: 14px; }
+.cap { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 16px; border-top: 1px solid var(--rej); } .cap i { width: 18px; height: 18px; border: 2px solid var(--g); flex: none; } .cap i.on { background: var(--g); box-shadow: inset 0 0 0 3px var(--papel); } .cap em { margin-left: auto; font: 13px "FiraMono"; color: var(--tenue); font-style: normal; }
+.esc { border: 2px solid var(--g); padding: 10px 12px; margin-top: 6px; } .esc b { font: 800 30px/1 "Fira"; color: var(--rojo); display: block; } .esc span { font-size: 14px; color: var(--tenue); }
+.plano { position: relative; overflow: hidden; background-image: linear-gradient(var(--rej) 1px, transparent 1px), linear-gradient(90deg, var(--rej) 1px, transparent 1px); background-size: 80px 80px; background-position: -1px -1px; }
+.caja { position: absolute; top: 0; height: 100%; aspect-ratio: 203/193; left: -80px; } .caja > svg { position: absolute; inset: 0; width: 100%; height: 100%; } .manz { position: absolute; left: 10.1%; top: 0; width: 79.8%; height: 101.2%; }
+.iso6 { position: absolute; border-radius: 50%; border: 2px dashed var(--rojo); transform: translate(-50%, -50%); } .iso6 span { position: absolute; left: 50%; top: -11px; transform: translateX(-50%); background: var(--papel); color: var(--rojo); font: 700 13px "FiraMono"; padding: 0 6px; }
+.epi { position: absolute; width: 22px; height: 22px; transform: translate(-50%, -50%); } .epi::before, .epi::after { content: ""; position: absolute; background: var(--rojo); } .epi::before { left: 10px; top: -6px; width: 2px; height: 34px; } .epi::after { top: 10px; left: -6px; height: 2px; width: 34px; }
+.pin { position: absolute; width: 30px; height: 30px; background: var(--verde); color: #fff; font: 700 15px "FiraMono"; display: grid; place-items: center; transform: translate(-50%, -50%) rotate(45deg); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--verde); } .pin b { transform: rotate(-45deg); font-weight: 700; } .pin.sel { box-shadow: 0 0 0 4px var(--g); }
+.coord { position: absolute; font: 12px "FiraMono"; color: var(--tenue); background: #fbfbfacc; padding: 1px 4px; }
+.norte { position: absolute; right: 18px; top: 18px; text-align: center; font: 700 18px "Fira"; background: var(--papel); padding: 4px 8px; } .norte i { display: block; width: 0; height: 0; border: 9px solid transparent; border-bottom: 24px solid var(--g); border-top: 0; margin: 0 auto 2px; }
+.barra { position: absolute; left: 18px; bottom: 18px; background: var(--papel); padding: 6px 10px; font: 13px "FiraMono"; } .barra i { display: block; height: 8px; width: 170px; border: 2px solid var(--g); border-top: 0; background: linear-gradient(90deg, var(--g) 50%, var(--papel) 50%) 0 100%/50% 4px repeat-x; margin-bottom: 4px; }
+.insp { border-left: 2px solid var(--g); padding: 18px; overflow: hidden; } .insp h3 { font: 800 30px/1.05 "Fira"; letter-spacing: -.02em; margin-bottom: 4px; } .insp .co { font: 14px "FiraMono"; color: var(--tenue); margin-bottom: 14px; }
+.insp table { width: 100%; border-collapse: collapse; font-size: 16px; } .insp td { padding: 8px 0; border-top: 1px solid var(--rej); vertical-align: top; } .insp td:first-child { color: var(--tenue); width: 46%; } .insp td:last-child { font: 15px "FiraMono"; }
+.pend { background: var(--amb); font: 700 12px "FiraMono"; padding: 2px 6px; }
+.btn { display: block; text-align: center; padding: 15px; font: 700 18px "Fira"; border: 2px solid var(--g); margin-top: 12px; } .btn.p { background: var(--g); color: #fff; }
+.aviso6 { border: 2px solid var(--amb); background: #fff8dc; padding: 10px 12px; font-size: 14px; line-height: 1.4; margin-top: 14px; }
+.cajetin { border-top: 2px solid var(--g); display: grid; grid-template-columns: 1.3fr .9fr 1.7fr .7fr 1.4fr 1.3fr 1.1fr .6fr; } .cajetin div { padding: 10px 14px; border-right: 1px solid var(--g); display: grid; align-content: space-between; } .cajetin div:last-child { border: 0; } .cajetin small { font: 12px "FiraMono"; color: var(--tenue); } .cajetin b { font: 700 18px/1.15 "Fira"; } .cajetin .est b { color: #8a6500; }
+/* hoja imprimible */
+.a3 .cuerpo2 { display: grid; grid-template-columns: 1fr 520px; min-height: 0; } .a3 .plano { border-right: 2px solid var(--g); } .a3 .der { padding: 22px 26px; overflow: hidden; } .a3 h2 { font: 800 40px/1 "Fira"; letter-spacing: -.02em; margin-bottom: 4px; } .a3 h5 { font: 700 13px "Fira"; color: var(--tenue); margin: 20px 0 6px; }
+.firmas { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 2px solid var(--g); margin-top: 18px; } .firmas div { height: 96px; padding: 8px 10px; font: 12px "FiraMono"; color: var(--tenue); } .firmas div + div { border-left: 2px solid var(--g); }
+/* móvil */
+.mv6 { background: var(--papel); } .mv6 .top { padding: 18px 20px 14px; border-bottom: 2px solid var(--g); } .mv6 .top .mono { font-size: 13px; color: var(--tenue); } .mv6 h3 { font: 800 28px/1.05 "Fira"; letter-spacing: -.02em; margin: 6px 0 8px; }
+.gps { display: inline-block; font: 13px "FiraMono"; border: 2px solid var(--verde); color: var(--verde); padding: 3px 8px; }
+.q { padding: 16px 20px; border-bottom: 1px solid var(--rej); } .q b { display: block; font: 700 18px/1.25 "Fira"; margin-bottom: 10px; } .opt { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid var(--g); } .opt span { text-align: center; padding: 11px 0; font: 700 17px "Fira"; } .opt span + span { border-left: 2px solid var(--g); } .opt .on { background: var(--g); color: #fff; }
+.pie6 { position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 20px 22px; background: var(--papel); border-top: 2px solid var(--g); } .pie6 .btn { margin: 0; }
+</style>
+<body>
+<!--DEFS-->
+<div class="meta"><b>Propuesta 6 · Cajetín</b>La herramienta de trabajo de las entidades como un plano técnico, igual en cualquier ciudad: el cajetín trae el marco legal del país y la fuente de datos de cada lugar, así la hoja cambia de ciudad sin cambiar de diseño. cuadrícula con referencias, escala gráfica, norte, isosistas del sismo y el cajetín que todo plano lleva (proyecto, escenario, escala, fuente, estado). El mismo diseño se imprime como hoja firmable. Gris grafito, verde solo para refugios y rojo solo para amenaza. Sobrio, preciso y fácil de auditar.</div>
+
+<div class="frame"><div class="hoja">
+  <div class="cuerpo">
+    <div class="capas"><span class="m">Territorio Preparado</span><h4>Ciudad e idioma</h4><div class="cap">Cali, Colombia ▾<em>ES</em></div><div class="cap">Unidades<em>métrico</em></div><h4>Escenario</h4>
+      <div class="esc"><b>Mw 7,0</b><span>15 km · bajo el centro · intensidad VIII</span></div>
+      <h4>Capas</h4>
+      <div class="cap"><i class="on"></i>Manzanas por altura<em>14.179</em></div><div class="cap"><i class="on"></i>Curvas de nivel<em>50 m</em></div><div class="cap"><i class="on"></i>Isosistas<em>VI–VIII</em></div><div class="cap"><i class="on"></i>Acopios sugeridos<em>8</em></div><div class="cap"><i></i>Daño por manzana<em>G0–G5</em></div><div class="cap"><i></i>Amenazas oficiales<em>del lugar</em></div><div class="cap"><i></i>Suelos y licuación<em>del lugar</em></div>
+      <h4>Vistas guardadas</h4><div class="cap">Centro</div><div class="cap">Zona inundable</div><div class="cap">Ladera</div></div>
+    <div class="plano"><div class="caja" style="--m0:#c3c8cc"><svg viewBox="0 0 203 193"><use href="#iso"/></svg><svg class="manz" viewBox="0 0 1960 2362"><use href="#man"/></svg>
+      <div class="iso6" style="left:59%;top:47.8%;width:36%;aspect-ratio:1"><span>VI</span></div><div class="iso6" style="left:59%;top:47.8%;width:22%;aspect-ratio:1"><span>VII</span></div><div class="iso6" style="left:59%;top:47.8%;width:9%;aspect-ratio:1"><span>VIII</span></div><div class="epi" style="left:59%;top:47.8%"></div>
+      <div class="pin" style="left:62%;top:43%"><b>1</b></div><div class="pin" style="left:65%;top:50%"><b>2</b></div><div class="pin sel" style="left:55%;top:53%"><b>3</b></div><div class="pin" style="left:57%;top:39%"><b>4</b></div><div class="pin" style="left:68%;top:46%"><b>5</b></div></div>
+      <div class="coord" style="left:8px;top:8px">3°32′N 76°38′O</div><div class="coord" style="right:8px;bottom:8px">3°21′N 76°24′O</div>
+      <div class="norte"><i></i>N</div><div class="barra"><i></i>0 · 2 · 4 km</div></div>
+    <div class="insp"><h4>Seleccionado</h4><h3>Acopio 3</h3><div class="co">3,4312 N · 76,5461 O</div>
+      <table><tr><td>Tipo</td><td>Espacio público</td></tr><tr><td>Área</td><td>4.200 m² <span class="pend">POR MEDIR</span></td></tr><tr><td>Suelo</td><td>Sin licuación</td></tr><tr><td>Intensidad</td><td>VII</td></tr><tr><td>Autorización</td><td><span class="pend">PENDIENTE</span></td></tr><tr><td>Último reporte</td><td>sin reporte</td></tr></table>
+      <div class="aviso6"><b>Elegibilidad no es aprobación.</b> La autoridad decide tras inspección.</div>
+      <span class="btn p">Preparar este espacio</span><span class="btn">Ver reportes del sector</span></div>
+  </div>
+  <div class="cajetin"><div><small>Proyecto</small><b>Territorio Preparado</b></div><div><small>Ciudad</small><b>Cali, CO</b></div><div><small>Escenario</small><b>Sismo Mw 7,0 · 15 km · bajo el centro</b></div><div><small>Escala</small><b>1 : 60.000</b></div><div><small>Fuente</small><b>Datos abiertos locales · SRTM · AWW 2012</b></div><div><small>Marco legal</small><b>Colombia · Ley 1523/2012</b></div><div class="est"><small>Estado</small><b>ILUSTRATIVO, no es pronóstico</b></div><div><small>Hoja</small><b>1 / 3</b></div></div>
+</div></div>
+
+<div class="frame a3"><div class="hoja">
+  <div class="cuerpo2"><div class="plano"><div class="caja" style="left:-170px;--m0:#c3c8cc"><svg viewBox="0 0 203 193"><use href="#iso"/></svg><svg class="manz" viewBox="0 0 1960 2362"><use href="#man"/></svg><div class="iso6" style="left:59%;top:47.8%;width:22%;aspect-ratio:1"><span>VII</span></div><div class="pin sel" style="left:55%;top:53%"><b>3</b></div></div><div class="norte"><i></i>N</div><div class="barra"><i></i>0 · 2 · 4 km</div></div>
+    <div class="der"><h2>Informe de preparación: Acopio 3</h2><div class="mono" style="font-size:14px;color:var(--tenue)">3,4312 N · 76,5461 O · Cali</div>
+      <h5>Qué se sabe</h5><table style="width:100%;border-collapse:collapse;font-size:16px"><tr><td style="padding:7px 0;border-top:1px solid var(--rej);color:var(--tenue)">Área</td><td style="text-align:right" class="mono">4.200 m² · por medir</td></tr><tr><td style="padding:7px 0;border-top:1px solid var(--rej);color:var(--tenue)">Personas de referencia</td><td style="text-align:right" class="mono">143 (simulado)</td></tr><tr><td style="padding:7px 0;border-top:1px solid var(--rej);color:var(--tenue)">Kits requeridos</td><td style="text-align:right" class="mono">8 = ⌈143/20⌉</td></tr><tr><td style="padding:7px 0;border-top:1px solid var(--rej);color:var(--tenue)">Baños portátiles</td><td style="text-align:right" class="mono">8 = ⌈143/20⌉</td></tr></table>
+      <h5>Qué falta confirmar</h5><ul style="font-size:16px;line-height:1.6;padding-left:20px"><li>Autorización del propietario</li><li>Levantamiento del área en sitio</li><li>Inspección de estructuras y accesos por un profesional (norma local; en Colombia, NSR-10)</li></ul>
+      <div class="firmas"><div>Elaboró<br><br>__________</div><div>Decide la autoridad<br><br>__________</div></div></div></div>
+  <div class="cajetin"><div><small>Proyecto</small><b>Territorio Preparado</b></div><div><small>Ciudad</small><b>Cali, CO</b></div><div><small>Escenario</small><b>Sismo Mw 7,0 · 15 km · bajo el centro</b></div><div><small>Escala</small><b>1 : 60.000</b></div><div><small>Fuente</small><b>Datos abiertos locales · SRTM</b></div><div><small>Marco legal</small><b>Colombia · Ley 1523/2012</b></div><div class="est"><small>Estado</small><b>BORRADOR, sin aprobación</b></div><div><small>Hoja</small><b>2 / 3</b></div></div>
+</div></div>
+
+<div class="fila"><div class="frame movil mv6"><div class="top"><div class="mono">ACOPIO 3 · CALI</div><h3>Verificación en sitio</h3><span class="gps">GPS ±8 m · 3,4312 N 76,5461 O</span></div>
+  <div class="q"><b>¿Tiene acceso para vehículos de ayuda?</b><div class="opt"><span class="on">Sí</span><span>No</span><span>No sé</span></div></div>
+  <div class="q"><b>¿Hay agua potable o tomas cercanas?</b><div class="opt"><span>Sí</span><span class="on">No</span><span>No sé</span></div></div>
+  <div class="q"><b>¿El suelo está despejado y plano?</b><div class="opt"><span>Sí</span><span>No</span><span class="on">No sé</span></div></div>
+  <div class="q"><b>Foto del lugar</b><span class="btn" style="margin:0">Tomar foto (sin personas)</span></div>
+  <div class="pie6"><span class="btn p">Guardar verificación</span></div></div>
+  <div class="meta" style="max-width:440px;align-self:center"><b>Hojas y móvil</b>La misma idea sirve en tres formatos: el tablero de trabajo, la hoja imprimible con espacio para firma (la decisión es de la autoridad) y la ficha de verificación en sitio con GPS y respuestas Sí / No / No sé, para no obligar a inventar.</div></div>
+</body></html>

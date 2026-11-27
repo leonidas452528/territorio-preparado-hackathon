@@ -4,6 +4,8 @@
 
 Proyecto para la **Hackathon Smart City Expo Cali 2026**, **RETO-01 Cali Activa: espacios públicos que se transforman para cuidar** (Alcaldía de Santiago de Cali).
 
+🏆 **Primer lugar del Reto 1** en la Hackatón de Universidades Smart City Expo Cali 2026 ([publicación de la Universidad Libre](https://www.instagram.com/p/DeNddRTlOEI/)).
+
 **Equipo:** William Ortiz · Herlin Echeverry · Pablo Arango · Bryan Martínez Villamarín
 
 ![Explorador territorial](docs/capturas/maqueta3d.png)
